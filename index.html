@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Júlio &amp; Grazielly — Casamento</title>
+<meta name="description" content="Confirme sua presença no casamento de Júlio e Grazielly">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💍</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ivory:#faf7f1;
+  --cream:#f4ede1;
+  --gold:#b8965a;
+  --gold-light:#d9c294;
+  --gold-pale:#efe6d4;
+  --green:#43594a;
+  --green-dark:#31433a;
+  --rose:#c9848a;
+  --text:#3d3831;
+  --text-soft:#7a7266;
+  --white:#ffffff;
+  --danger:#b05555;
+  --ok:#5a8a63;
+  --shadow:0 10px 40px rgba(61,56,49,.10);
+  --shadow-sm:0 4px 16px rgba(61,56,49,.08);
+  --radius:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:var(--ivory);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+.serif{font-family:'Cormorant Garamond',serif}
+.script{font-family:'Great Vibes',cursive}
+.hidden{display:none!important}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select,textarea{font-family:inherit;font-size:1rem;color:var(--text)}
+a{color:var(--gold);text-decoration:none}
+
+/* ============ BOTÕES ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.9rem 2.2rem;border-radius:50px;font-weight:600;font-size:.95rem;letter-spacing:.05em;transition:all .25s ease;border:2px solid transparent}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#a3823f);color:#fff;box-shadow:0 6px 20px rgba(184,150,90,.35)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(184,150,90,.45)}
+.btn-outline{border-color:var(--gold);color:var(--gold);background:transparent}
+.btn-outline:hover{background:var(--gold);color:#fff}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:var(--green-dark)}
+.btn-ghost{color:var(--text-soft);font-weight:500}
+.btn-ghost:hover{color:var(--text)}
+.btn-sm{padding:.45rem 1.1rem;font-size:.8rem}
+.btn-danger{background:#fbeeee;color:var(--danger)}
+.btn-danger:hover{background:var(--danger);color:#fff}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* ============ LANDING ============ */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3rem 1.5rem;position:relative;overflow:hidden;background:
+  radial-gradient(ellipse at 15% 10%, rgba(217,194,148,.25), transparent 50%),
+  radial-gradient(ellipse at 85% 90%, rgba(201,132,138,.14), transparent 50%),
+  var(--ivory)}
+.hero::before,.hero::after{content:'';position:absolute;width:520px;height:520px;background-repeat:no-repeat;background-size:contain;opacity:.9;pointer-events:none}
+.hero::before{top:-140px;left:-140px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%23c9a96a' stroke-width='1.2' opacity='.55'%3E%3Cpath d='M20 100 Q 60 60 100 20'/%3E%3Cpath d='M10 130 Q 70 80 130 10'/%3E%3Cpath d='M30 160 Q 90 110 160 30'/%3E%3C/g%3E%3Cg fill='%23d9c294' opacity='.5'%3E%3Ccircle cx='100' cy='20' r='5'/%3E%3Ccircle cx='130' cy='10' r='4'/%3E%3Ccircle cx='160' cy='30' r='5'/%3E%3Ccircle cx='60' cy='62' r='3'/%3E%3Ccircle cx='70' cy='82' r='3'/%3E%3C/g%3E%3Cg fill='%23c9848a' opacity='.42'%3E%3Cellipse cx='40' cy='95' rx='9' ry='5' transform='rotate(-40 40 95)'/%3E%3Cellipse cx='55' cy='120' rx='8' ry='4' transform='rotate(-35 55 120)'/%3E%3Cellipse cx='85' cy='45' rx='8' ry='4' transform='rotate(-50 85 45)'/%3E%3C/g%3E%3C/svg%3E")}
+.hero::after{bottom:-140px;right:-140px;transform:rotate(180deg);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%23c9a96a' stroke-width='1.2' opacity='.55'%3E%3Cpath d='M20 100 Q 60 60 100 20'/%3E%3Cpath d='M10 130 Q 70 80 130 10'/%3E%3Cpath d='M30 160 Q 90 110 160 30'/%3E%3C/g%3E%3Cg fill='%23d9c294' opacity='.5'%3E%3Ccircle cx='100' cy='20' r='5'/%3E%3Ccircle cx='130' cy='10' r='4'/%3E%3Ccircle cx='160' cy='30' r='5'/%3E%3C/g%3E%3Cg fill='%23c9848a' opacity='.42'%3E%3Cellipse cx='40' cy='95' rx='9' ry='5' transform='rotate(-40 40 95)'/%3E%3Cellipse cx='55' cy='120' rx='8' ry='4' transform='rotate(-35 55 120)'/%3E%3Cellipse cx='85' cy='45' rx='8' ry='4' transform='rotate(-50 85 45)'/%3E%3C/g%3E%3C/svg%3E")}
+.hero-inner{position:relative;z-index:2;max-width:820px;animation:fadeUp 1s ease both}
+.hero-eyebrow{font-size:.8rem;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:1.4rem}
+.hero-names{font-family:'Great Vibes',cursive;font-size:clamp(3.4rem,9vw,6.2rem);color:var(--green-dark);line-height:1.15;margin-bottom:.4rem}
+.hero-amp{color:var(--gold);font-size:.6em;vertical-align:middle;padding:0 .15em}
+.ornament{display:flex;align-items:center;justify-content:center;gap:1rem;margin:1.6rem 0;color:var(--gold)}
+.ornament .line{height:1px;width:90px;background:linear-gradient(90deg,transparent,var(--gold-light))}
+.ornament .line:last-child{background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-date{font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,3.4vw,1.9rem);font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text)}
+.hero-place{color:var(--text-soft);margin-top:.5rem;font-size:1.02rem}
+.countdown{display:flex;gap:.9rem;justify-content:center;margin:2.3rem 0}
+.count-box{background:var(--white);border:1px solid var(--gold-pale);border-radius:14px;box-shadow:var(--shadow-sm);min-width:82px;padding:.9rem .6rem}
+.count-num{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:700;color:var(--green-dark);line-height:1}
+.count-label{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-soft);margin-top:.35rem}
+.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.4rem}
+.scroll-hint{position:absolute;bottom:1.6rem;left:50%;transform:translateX(-50%);color:var(--gold);animation:bob 2s infinite;font-size:1.4rem;z-index:2}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+
+.section{max-width:980px;margin:0 auto;padding:4.5rem 1.5rem}
+.section-title{text-align:center;margin-bottom:2.6rem}
+.section-title .script-sub{font-family:'Great Vibes',cursive;font-size:2rem;color:var(--gold);display:block;margin-bottom:.2rem}
+.section-title h2{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:600;color:var(--green-dark);letter-spacing:.06em}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.4rem}
+.info-card{background:var(--white);border:1px solid var(--gold-pale);border-radius:var(--radius);padding:2rem 1.6rem;text-align:center;box-shadow:var(--shadow-sm);transition:transform .25s}
+.info-card:hover{transform:translateY(-4px)}
+.info-card .icon{font-size:2rem;margin-bottom:.8rem}
+.info-card h3{font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--green-dark);margin-bottom:.5rem}
+.info-card p{color:var(--text-soft);font-size:.95rem;white-space:pre-line}
+.msg-couple{background:linear-gradient(160deg,var(--cream),var(--ivory));border-radius:var(--radius);padding:3rem 2rem;text-align:center;border:1px solid var(--gold-pale)}
+.msg-couple p{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-style:italic;color:var(--text);max-width:640px;margin:0 auto;white-space:pre-line}
+.footer{text-align:center;padding:2.6rem 1.5rem;color:var(--text-soft);font-size:.85rem;border-top:1px solid var(--gold-pale);margin-top:2rem}
+.footer .script{font-size:1.7rem;color:var(--gold);display:block;margin-bottom:.4rem}
+.organizer-link{font-size:.78rem;color:#c8c0b2;margin-top:.8rem;display:inline-block}
+.organizer-link:hover{color:var(--gold)}
+
+/* ============ MODAL / RSVP ============ */
+.overlay{position:fixed;inset:0;background:rgba(49,58,54,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:100;padding:1rem;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--white);border-radius:22px;max-width:520px;width:100%;max-height:92vh;overflow-y:auto;padding:2.4rem 2rem;position:relative;box-shadow:var(--shadow);animation:pop .3s ease}
+@keyframes pop{from{opacity:0;transform:scale(.94) translateY(14px)}to{opacity:1;transform:none}}
+.modal-close{position:absolute;top:1rem;right:1.1rem;font-size:1.5rem;color:var(--text-soft);line-height:1}
+.modal-close:hover{color:var(--danger)}
+.modal h3{font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--green-dark);text-align:center;margin-bottom:.4rem}
+.modal .sub{text-align:center;color:var(--text-soft);font-size:.92rem;margin-bottom:1.6rem}
+.field{margin-bottom:1.1rem}
+.field label{display:block;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-soft);margin-bottom:.4rem}
+.field input,.field select,.field textarea{width:100%;padding:.8rem 1rem;border:1.5px solid #e5ddcf;border-radius:12px;background:var(--ivory);transition:border .2s;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);background:#fff}
+.field textarea{resize:vertical;min-height:80px}
+.choice-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin:1.2rem 0}
+.choice{border:2px solid #e5ddcf;border-radius:16px;padding:1.3rem .8rem;text-align:center;transition:all .2s;background:var(--ivory)}
+.choice .em{font-size:1.9rem;display:block;margin-bottom:.4rem}
+.choice span{font-weight:600;font-size:.9rem}
+.choice:hover{border-color:var(--gold-light)}
+.choice.sel-yes{border-color:var(--ok);background:#eef6ef}
+.choice.sel-no{border-color:var(--danger);background:#fbeeee}
+.comp-row{display:flex;gap:.6rem;margin-bottom:.6rem;align-items:center}
+.comp-row input{flex:1;padding:.65rem .9rem;border:1.5px solid #e5ddcf;border-radius:10px;background:var(--ivory);outline:none}
+.comp-row input:focus{border-color:var(--gold)}
+.comp-del{color:var(--danger);font-size:1.2rem;padding:.3rem .5rem}
+.add-comp{color:var(--gold);font-weight:600;font-size:.88rem;padding:.4rem 0}
+.add-comp:hover{text-decoration:underline}
+.rsvp-success{text-align:center;padding:1.5rem 0}
+.rsvp-success .big{font-size:3.6rem;animation:pop .5s ease}
+.rsvp-success h3{margin:.8rem 0 .5rem}
+.rsvp-success p{color:var(--text-soft)}
+.match-card{border:1.5px solid var(--gold-light);background:var(--gold-pale);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1rem;font-size:.95rem}
+.error-txt{color:var(--danger);font-size:.85rem;margin-top:.4rem}
+.notice{background:#fdf6e7;border:1px solid var(--gold-light);color:#8a6d3b;border-radius:12px;padding:.8rem 1rem;font-size:.85rem;margin-bottom:1.2rem}
+
+/* ============ LOGIN ============ */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:radial-gradient(ellipse at 50% 0%,rgba(217,194,148,.22),transparent 60%),var(--ivory)}
+.login-card{background:var(--white);border-radius:22px;box-shadow:var(--shadow);padding:2.8rem 2.4rem;max-width:400px;width:100%;text-align:center;border:1px solid var(--gold-pale)}
+.login-card .script{font-size:2.4rem;color:var(--gold)}
+.login-card h2{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--green-dark);margin:.3rem 0 1.6rem}
+
+/* ============ DASHBOARD ============ */
+.dash{min-height:100vh;background:#f3efe7}
+.dash-header{background:var(--green-dark);color:#fff;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;position:sticky;top:0;z-index:50}
+.dash-header .brand{display:flex;align-items:center;gap:.8rem}
+.dash-header .brand .script{font-size:1.6rem;color:var(--gold-light)}
+.dash-header .brand small{opacity:.75;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
+.dash-actions{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.dash-actions .btn{padding:.5rem 1.1rem;font-size:.8rem}
+.tabs{display:flex;gap:.3rem;background:var(--green-dark);padding:0 1rem .8rem;overflow-x:auto;position:sticky;top:64px;z-index:49}
+.tab{color:rgba(255,255,255,.72);padding:.55rem 1.1rem;border-radius:50px;font-size:.85rem;font-weight:500;white-space:nowrap;transition:all .2s}
+.tab:hover{color:#fff;background:rgba(255,255,255,.08)}
+.tab.active{background:var(--gold);color:#fff;font-weight:600}
+.dash-body{max-width:1080px;margin:0 auto;padding:1.8rem 1.2rem 4rem}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1.6rem}
+.stat-card{background:#fff;border-radius:16px;padding:1.3rem 1.2rem;box-shadow:var(--shadow-sm);border-left:4px solid var(--gold)}
+.stat-card.ok{border-left-color:var(--ok)}
+.stat-card.bad{border-left-color:var(--danger)}
+.stat-card.pend{border-left-color:#c9a24b}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--green-dark);line-height:1.1}
+.stat-label{font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-soft);font-weight:600}
+.panel{background:#fff;border-radius:18px;box-shadow:var(--shadow-sm);padding:1.6rem;margin-bottom:1.4rem}
+.panel h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--green-dark);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.progress-outer{background:var(--gold-pale);border-radius:50px;height:14px;overflow:hidden}
+.progress-inner{background:linear-gradient(90deg,var(--gold),var(--ok));height:100%;border-radius:50px;transition:width .6s ease;min-width:0}
+.toolbar{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center;margin-bottom:1.1rem}
+.toolbar input[type=search],.toolbar select{padding:.6rem .9rem;border:1.5px solid #e5ddcf;border-radius:10px;background:var(--ivory);outline:none;font-size:.9rem}
+.toolbar input[type=search]{flex:1;min-width:170px}
+.toolbar input:focus,.toolbar select:focus{border-color:var(--gold)}
+.g-table{width:100%;border-collapse:collapse;font-size:.9rem}
+.g-table th{text-align:left;padding:.6rem .7rem;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-soft);border-bottom:2px solid var(--gold-pale)}
+.g-table td{padding:.7rem;border-bottom:1px solid #f0ebe0;vertical-align:top}
+.g-table tr:hover td{background:#faf7f0}
+.badge{display:inline-block;padding:.22rem .7rem;border-radius:50px;font-size:.72rem;font-weight:600}
+.badge.confirmado{background:#e5f2e6;color:var(--ok)}
+.badge.recusado{background:#fbeeee;color:var(--danger)}
+.badge.pendente{background:#faf3df;color:#9c7c2f}
+.icon-btn{padding:.3rem .45rem;border-radius:8px;font-size:1rem;color:var(--text-soft)}
+.icon-btn:hover{background:var(--gold-pale);color:var(--text)}
+.empty{text-align:center;color:var(--text-soft);padding:2.2rem 1rem;font-size:.95rem}
+.empty .em{font-size:2.2rem;display:block;margin-bottom:.5rem}
+.check-item{display:flex;align-items:flex-start;gap:.8rem;padding:.75rem .5rem;border-bottom:1px solid #f0ebe0}
+.check-item input[type=checkbox]{width:20px;height:20px;accent-color:var(--gold);margin-top:.15rem;cursor:pointer}
+.check-item .t{flex:1}
+.check-item .t .title{font-weight:500}
+.check-item.done .t .title{text-decoration:line-through;color:var(--text-soft)}
+.check-item .t .meta{font-size:.76rem;color:var(--text-soft)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.form-grid .full{grid-column:1/-1}
+@media(max-width:640px){.form-grid{grid-template-columns:1fr}.choice-row{grid-template-columns:1fr}}
+.recado{border-left:3px solid var(--gold-light);background:var(--ivory);border-radius:0 12px 12px 0;padding:.9rem 1.1rem;margin-bottom:.9rem}
+.recado .who{font-weight:600;color:var(--green-dark);font-size:.9rem}
+.recado .txt{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.08rem;margin-top:.2rem}
+.money-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:1.3rem}
+.toast{position:fixed;bottom:1.6rem;left:50%;transform:translateX(-50%);background:var(--green-dark);color:#fff;padding:.85rem 1.6rem;border-radius:50px;box-shadow:var(--shadow);z-index:200;font-size:.9rem;animation:pop .3s ease}
+.demo-banner{background:#8a6d3b;color:#fff;text-align:center;padding:.5rem 1rem;font-size:.8rem}
+.demo-banner a{color:#ffe6b3;text-decoration:underline}
+.chart-row{display:flex;gap:2rem;align-items:center;flex-wrap:wrap;justify-content:center}
+.legend{display:flex;flex-direction:column;gap:.5rem;font-size:.88rem}
+.legend .dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:.5rem}
+.spin{display:inline-block;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media print{.dash-header,.tabs,.toolbar,.icon-btn,.dash-actions{display:none!important}}
+</style>
+</head>
+<body>
+<!-- ===================== PÁGINA DO CONVIDADO ===================== -->
+<div id="view-landing">
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Vamos nos casar</p>
+      <h1 class="hero-names"><span id="l-groom">Júlio</span><span class="hero-amp">&amp;</span><span id="l-bride">Grazielly</span></h1>
+      <div class="ornament"><span class="line"></span>❦<span class="line"></span></div>
+      <p class="hero-date" id="l-date">19 · 12 · 2026</p>
+      <p class="hero-place" id="l-place-short"></p>
+      <div class="countdown" id="countdown"></div>
+      <div class="hero-actions">
+        <button class="btn btn-gold" onclick="RSVP.open()">💌 &nbsp;Confirmar Presença</button>
+        <a class="btn btn-outline" href="#detalhes">Ver Detalhes</a>
+      </div>
+    </div>
+    <div class="scroll-hint">▾</div>
+  </section>
+
+  <section class="section" id="detalhes">
+    <div class="section-title">
+      <span class="script-sub">com amor</span>
+      <h2>Detalhes da Celebração</h2>
+    </div>
+    <div class="info-grid">
+      <div class="info-card"><div class="icon">📅</div><h3>Data &amp; Horário</h3><p id="l-datetime">19 de dezembro • 16h00</p></div>
+      <div class="info-card"><div class="icon">📍</div><h3>Local</h3><p id="l-venue">Local a confirmar</p></div>
+      <div class="info-card"><div class="icon">👗</div><h3>Traje</h3><p id="l-dress">Esporte fino</p></div>
+      <div class="info-card" id="card-gift" style="display:none"><div class="icon">🎁</div><h3>Presentes</h3><p id="l-gift"></p></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="msg-couple">
+      <div class="script" style="font-size:2.2rem;color:var(--gold);margin-bottom:.8rem">Júlio &amp; Grazielly</div>
+      <p id="l-message">Com a bênção de Deus e de nossas famílias, temos a alegria de convidar você para celebrar conosco o nosso casamento. Sua presença tornará esse dia ainda mais especial!</p>
+      <div style="margin-top:1.8rem"><button class="btn btn-gold" onclick="RSVP.open()">Confirmar minha presença</button></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span class="script" id="f-names">Júlio &amp; Grazielly</span>
+    <span id="f-date">19 de dezembro</span><br>
+    Feito com ♥ para o nosso grande dia<br>
+    <a class="organizer-link" href="#organizador" onclick="App.showLogin()">Área do organizador</a>
+  </footer>
+</div>
+
+<!-- ===================== MODAL RSVP ===================== -->
+<div id="rsvp-overlay" class="overlay hidden">
+  <div class="modal">
+    <button class="modal-close" onclick="RSVP.close()">×</button>
+
+    <div id="rsvp-step-name">
+      <h3>Confirmação de Presença</h3>
+      <p class="sub">Que alegria ter você conosco! Digite seu nome completo para começar.</p>
+      <div class="field">
+        <label>Seu nome completo</label>
+        <input type="text" id="rsvp-name" placeholder="Ex.: Maria da Silva" autocomplete="name">
+        <div class="error-txt hidden" id="rsvp-name-err">Por favor, digite seu nome completo.</div>
+      </div>
+      <div id="rsvp-match" class="hidden"></div>
+      <button class="btn btn-gold" style="width:100%" onclick="RSVP.stepName()">Continuar →</button>
+    </div>
+
+    <div id="rsvp-step-confirm" class="hidden">
+      <h3 id="rsvp-greet">Olá!</h3>
+      <p class="sub">Você poderá comparecer ao casamento?</p>
+      <div class="choice-row">
+        <button class="choice" id="choice-yes" onclick="RSVP.setAttending(true)"><span class="em">🥂</span><span>Sim, estarei lá!</span></button>
+        <button class="choice" id="choice-no" onclick="RSVP.setAttending(false)"><span class="em">😢</span><span>Não poderei ir</span></button>
+      </div>
+      <div id="rsvp-extra" class="hidden">
+        <div class="field">
+          <label>Acompanhantes <span style="text-transform:none;font-weight:400">(se houver)</span></label>
+          <div id="comp-list"></div>
+          <button class="add-comp" onclick="RSVP.addComp()">+ Adicionar acompanhante</button>
+        </div>
+        <div class="field">
+          <label>Telefone / WhatsApp <span style="text-transform:none;font-weight:400">(opcional)</span></label>
+          <input type="tel" id="rsvp-phone" placeholder="(00) 00000-0000">
+        </div>
+      </div>
+      <div class="field">
+        <label>Recado para os noivos <span style="text-transform:none;font-weight:400">(opcional)</span></label>
+        <textarea id="rsvp-message" placeholder="Deixe uma mensagem carinhosa..."></textarea>
+      </div>
+      <button class="btn btn-gold" style="width:100%" id="rsvp-submit" onclick="RSVP.submit()" disabled>Enviar confirmação</button>
+    </div>
+
+    <div id="rsvp-step-done" class="hidden">
+      <div class="rsvp-success">
+        <span class="big" id="done-emoji">🎉</span>
+        <h3 id="done-title">Presença confirmada!</h3>
+        <p id="done-text">Obrigado! Mal podemos esperar para celebrar com você. 💛</p>
+        <button class="btn btn-outline" style="margin-top:1.4rem" onclick="RSVP.close()">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LOGIN ORGANIZADOR ===================== -->
+<div id="view-login" class="login-wrap hidden">
+  <div class="login-card">
+    <span class="script">J &amp; G</span>
+    <h2>Área do Organizador</h2>
+    <div class="field" style="text-align:left">
+      <label>Usuário</label>
+      <input type="text" id="login-user" placeholder="usuário" autocomplete="username">
+    </div>
+    <div class="field" style="text-align:left">
+      <label>Senha</label>
+      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <div class="error-txt hidden" id="login-err" style="margin-bottom:.8rem">Usuário ou senha incorretos.</div>
+    <button class="btn btn-green" style="width:100%" onclick="App.login()">Entrar</button>
+    <button class="btn btn-ghost" style="width:100%;margin-top:.6rem" onclick="App.showLanding()">← Voltar ao site</button>
+  </div>
+</div>
+
+<!-- ===================== PAINEL DO ORGANIZADOR ===================== -->
+<div id="view-dash" class="dash hidden">
+  <div id="demo-banner" class="demo-banner hidden">⚠️ Modo demonstração — o banco de dados ainda não foi conectado. Os dados estão salvos apenas neste navegador.</div>
+  <header class="dash-header">
+    <div class="brand">
+      <span class="script">J &amp; G</span>
+      <div><strong>Painel do Casamento</strong><br><small>Organização &amp; Convidados</small></div>
+    </div>
+    <div class="dash-actions">
+      <button class="btn btn-outline" style="border-color:rgba(255,255,255,.4);color:#fff" onclick="App.copyLink()">🔗 Copiar link do site</button>
+      <button class="btn btn-ghost" style="color:rgba(255,255,255,.85)" onclick="App.logout()">Sair</button>
+    </div>
+  </header>
+  <nav class="tabs">
+    <button class="tab active" data-tab="overview" onclick="Dash.tab('overview')">📊 Visão Geral</button>
+    <button class="tab" data-tab="guests" onclick="Dash.tab('guests')">👥 Convidados</button>
+    <button class="tab" data-tab="checklist" onclick="Dash.tab('checklist')">✅ Checklist</button>
+    <button class="tab" data-tab="budget" onclick="Dash.tab('budget')">💰 Orçamento</button>
+    <button class="tab" data-tab="messages" onclick="Dash.tab('messages')">💌 Recados</button>
+    <button class="tab" data-tab="settings" onclick="Dash.tab('settings')">⚙️ Configurações</button>
+  </nav>
+  <main class="dash-body">
+    <div id="tab-overview"></div>
+    <div id="tab-guests" class="hidden"></div>
+    <div id="tab-checklist" class="hidden"></div>
+    <div id="tab-budget" class="hidden"></div>
+    <div id="tab-messages" class="hidden"></div>
+    <div id="tab-settings" class="hidden"></div>
+  </main>
+</div>
+
+<div id="modal-root"></div>
+<script src="firebase-config.js"></script>
+<script type="module">
+/* =====================================================================
+   CASAMENTO JÚLIO & GRAZIELLY — Aplicação completa
+   Banco: Firebase Firestore (ou localStorage em modo demonstração)
+   ===================================================================== */
+
+// ---------- Utilidades ----------
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm = (s) => String(s ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' ').trim();
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+const money = (v) => (Number(v)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const MESES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+async function sha256(t){ const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)); return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(''); }
+function toast(msg){ document.querySelectorAll('.toast').forEach(t=>t.remove()); const d=document.createElement('div'); d.className='toast'; d.textContent=msg; document.body.appendChild(d); setTimeout(()=>d.remove(),2600); }
+
+const DEFAULT_CONFIG = {
+  groomName:'Júlio', brideName:'Grazielly',
+  groomFull:'Júlio Augusto Rosa', brideFull:'Grazielly Dias de Oliveira',
+  date:'2026-12-19', time:'16:00',
+  venue:'Local a confirmar', address:'', city:'',
+  dressCode:'Esporte fino',
+  message:'Com a bênção de Deus e de nossas famílias, temos a alegria de convidar você para celebrar conosco o nosso casamento. Sua presença tornará esse dia ainda mais especial!',
+  giftInfo:''
+};
+const ORG_USER = 'organizador';
+const ORG_HASH = '1b149bf8eca3dbeefbc35dbbdb673acf4bb7d39c47e84466d7243e5aecb2be60';
+
+// ---------- Camada de dados (Firestore ou localStorage) ----------
+const DB = { mode:'local', fs:null, listeners:{} };
+
+async function initDB(){
+  if (window.FIREBASE_CONFIG && window.FIREBASE_CONFIG.apiKey) {
+    try {
+      const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+      const fsm = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+      const app = initializeApp(window.FIREBASE_CONFIG);
+      DB.fs = fsm; DB.db = fsm.getFirestore(app); DB.mode = 'firebase';
+    } catch(e){ console.error('Firebase indisponível, usando modo local:', e); DB.mode='local'; }
+  }
+  if (DB.mode==='local') $('demo-banner')?.classList.remove('hidden');
+}
+
+// --- localStorage helpers (modo demo) ---
+const LS = {
+  get(k,f){ try{ return JSON.parse(localStorage.getItem('jg_'+k)) ?? f; }catch{ return f; } },
+  set(k,v){ localStorage.setItem('jg_'+k, JSON.stringify(v)); (DB.listeners[k]||[]).forEach(cb=>cb()); }
+};
+
+const Store = {
+  async getConfig(){
+    if (DB.mode==='firebase'){
+      const snap = await DB.fs.getDoc(DB.fs.doc(DB.db,'config','main'));
+      return { ...DEFAULT_CONFIG, ...(snap.exists()? snap.data():{}) };
+    }
+    return { ...DEFAULT_CONFIG, ...LS.get('config',{}) };
+  },
+  async saveConfig(cfg){
+    if (DB.mode==='firebase') await DB.fs.setDoc(DB.fs.doc(DB.db,'config','main'), cfg, {merge:true});
+    else LS.set('config',cfg);
+  },
+  subscribe(coll, cb){ // lista em tempo real
+    if (DB.mode==='firebase'){
+      const q = DB.fs.query(DB.fs.collection(DB.db,coll));
+      return DB.fs.onSnapshot(q, snap => cb(snap.docs.map(d=>({id:d.id, ...d.data()}))), err => { console.error(err); cb([]); });
+    }
+    const fire = () => cb(LS.get(coll,[]));
+    (DB.listeners[coll] ||= []).push(fire); fire();
+    return () => { DB.listeners[coll] = (DB.listeners[coll]||[]).filter(f=>f!==fire); };
+  },
+  async list(coll){
+    if (DB.mode==='firebase'){
+      const snap = await DB.fs.getDocs(DB.fs.collection(DB.db,coll));
+      return snap.docs.map(d=>({id:d.id, ...d.data()}));
+    }
+    return LS.get(coll,[]);
+  },
+  async add(coll, data){
+    data = { ...data, createdAt: Date.now() };
+    if (DB.mode==='firebase'){ const ref = await DB.fs.addDoc(DB.fs.collection(DB.db,coll), data); return ref.id; }
+    const arr = LS.get(coll,[]); const id = uid(); arr.push({id, ...data}); LS.set(coll,arr); return id;
+  },
+  async update(coll, id, data){
+    data = { ...data, updatedAt: Date.now() };
+    if (DB.mode==='firebase'){ await DB.fs.updateDoc(DB.fs.doc(DB.db,coll,id), data); return; }
+    const arr = LS.get(coll,[]); const i = arr.findIndex(x=>x.id===id);
+    if (i>=0){ arr[i]={...arr[i],...data}; LS.set(coll,arr); }
+  },
+  async remove(coll, id){
+    if (DB.mode==='firebase'){ await DB.fs.deleteDoc(DB.fs.doc(DB.db,coll,id)); return; }
+    LS.set(coll, LS.get(coll,[]).filter(x=>x.id!==id));
+  }
+};
+
+// ---------- Estado global ----------
+const State = { config:{...DEFAULT_CONFIG}, guests:[], tasks:[], expenses:[], unsubs:[] };
+
+// ---------- App (navegação) ----------
+const App = {
+  showLanding(){ $('view-landing').classList.remove('hidden'); $('view-login').classList.add('hidden'); $('view-dash').classList.add('hidden'); history.replaceState(null,'','#'); },
+  showLogin(){ $('view-landing').classList.add('hidden'); $('view-dash').classList.add('hidden'); $('view-login').classList.remove('hidden'); setTimeout(()=>$('login-user').focus(),100); },
+  async login(){
+    const u = $('login-user').value.trim().toLowerCase();
+    const p = $('login-pass').value;
+    const h = await sha256(p);
+    if (u===ORG_USER && h===ORG_HASH){
+      sessionStorage.setItem('jg_auth','1');
+      $('login-err').classList.add('hidden'); $('login-pass').value='';
+      this.showDash();
+    } else { $('login-err').classList.remove('hidden'); }
+  },
+  logout(){ sessionStorage.removeItem('jg_auth'); this.showLanding(); },
+  showDash(){
+    $('view-landing').classList.add('hidden'); $('view-login').classList.add('hidden'); $('view-dash').classList.remove('hidden');
+    history.replaceState(null,'','#painel');
+    Dash.start();
+  },
+  copyLink(){
+    const url = location.origin + location.pathname;
+    navigator.clipboard.writeText(url).then(()=>toast('Link copiado! Envie para seus convidados 💌'));
+  }
+};
+
+// ---------- Landing (renderização) ----------
+function renderLanding(){
+  const c = State.config;
+  $('l-groom').textContent = c.groomName; $('l-bride').textContent = c.brideName;
+  $('f-names').innerHTML = esc(c.groomName)+' &amp; '+esc(c.brideName);
+  document.title = `${c.groomName} & ${c.brideName} — Casamento`;
+  let dateTxt = '', dateLong = '';
+  if (c.date){
+    const [y,m,d] = c.date.split('-').map(Number);
+    dateTxt = `${String(d).padStart(2,'0')} · ${String(m).padStart(2,'0')} · ${y}`;
+    dateLong = `${d} de ${MESES[m-1]} de ${y}`;
+  }
+  $('l-date').textContent = dateTxt || 'Data em breve';
+  $('f-date').textContent = dateLong;
+  $('l-datetime').textContent = (dateLong||'Data em breve') + (c.time? ` • ${c.time.replace(':','h')}` : '');
+  const placeParts = [c.venue, c.address, c.city].filter(Boolean);
+  $('l-venue').textContent = placeParts.join('\n') || 'Local a confirmar';
+  $('l-place-short').textContent = [c.venue,c.city].filter(Boolean).join(' — ');
+  $('l-dress').textContent = c.dressCode || 'Traje livre';
+  $('l-message').textContent = c.message || DEFAULT_CONFIG.message;
+  if (c.giftInfo){ $('card-gift').style.display=''; $('l-gift').textContent = c.giftInfo; }
+  else $('card-gift').style.display='none';
+  startCountdown();
+}
+
+let cdTimer = null;
+function startCountdown(){
+  clearInterval(cdTimer);
+  const c = State.config;
+  const target = c.date ? new Date(`${c.date}T${c.time||'00:00'}:00`) : null;
+  const el = $('countdown');
+  if (!target || isNaN(target)) { el.innerHTML=''; return; }
+  const tick = () => {
+    let diff = target - new Date();
+    if (diff <= 0){ el.innerHTML = `<div class="count-box" style="min-width:200px"><div class="count-num" style="font-size:1.5rem">É hoje! 🎉</div></div>`; clearInterval(cdTimer); return; }
+    const d = Math.floor(diff/864e5), h = Math.floor(diff%864e5/36e5), m = Math.floor(diff%36e5/6e4), s = Math.floor(diff%6e4/1e3);
+    el.innerHTML = [['Dias',d],['Horas',h],['Min',m],['Seg',s]].map(([l,v]) =>
+      `<div class="count-box"><div class="count-num">${String(v).padStart(2,'0')}</div><div class="count-label">${l}</div></div>`).join('');
+  };
+  tick(); cdTimer = setInterval(tick,1000);
+}
+
+// ---------- RSVP (fluxo do convidado) ----------
+const RSVP = {
+  data:{ name:'', attending:null, companions:[], phone:'', message:'', matchId:null },
+  open(){
+    this.data = { name:'', attending:null, companions:[], phone:'', message:'', matchId:null };
+    $('rsvp-overlay').classList.remove('hidden');
+    this.show('rsvp-step-name');
+    $('rsvp-name').value=''; $('rsvp-match').classList.add('hidden'); $('rsvp-name-err').classList.add('hidden');
+    setTimeout(()=>$('rsvp-name').focus(),100);
+  },
+  close(){ $('rsvp-overlay').classList.add('hidden'); },
+  show(id){ ['rsvp-step-name','rsvp-step-confirm','rsvp-step-done'].forEach(s=>$(s).classList.add('hidden')); $(id).classList.remove('hidden'); },
+  async stepName(){
+    const name = $('rsvp-name').value.trim();
+    if (name.length < 3 || !name.includes(' ')){ $('rsvp-name-err').classList.remove('hidden'); return; }
+    $('rsvp-name-err').classList.add('hidden');
+    this.data.name = name;
+    // procura convite pré-cadastrado ou confirmação anterior
+    const all = await Store.list('guests');
+    const n = norm(name);
+    const match = all.find(g => norm(g.name)===n) || all.find(g => norm(g.name).includes(n) || n.includes(norm(g.name)));
+    const box = $('rsvp-match');
+    if (match){
+      this.data.matchId = match.id;
+      if (match.status && match.status!=='pendente'){
+        box.innerHTML = `<div class="match-card">✨ <strong>${esc(match.name)}</strong>, encontramos uma resposta sua (${match.status==='confirmado'?'presença confirmada':'não poderá ir'}). Você pode atualizá-la abaixo.</div>`;
+      } else {
+        box.innerHTML = `<div class="match-card">✨ Encontramos seu convite, <strong>${esc(match.name)}</strong>!</div>`;
+      }
+      box.classList.remove('hidden');
+      this.data.name = match.name;
+      if (match.companions?.length) this.data.companions = [...match.companions];
+      if (match.phone) this.data.phone = match.phone;
+    }
+    $('rsvp-greet').textContent = `Olá, ${this.data.name.split(' ')[0]}! 💛`;
+    this.data.attending = null;
+    $('choice-yes').classList.remove('sel-yes'); $('choice-no').classList.remove('sel-no');
+    $('rsvp-extra').classList.add('hidden'); $('rsvp-submit').disabled = true;
+    $('rsvp-phone').value = this.data.phone || ''; $('rsvp-message').value='';
+    this.renderComps();
+    this.show('rsvp-step-confirm');
+  },
+  setAttending(v){
+    this.data.attending = v;
+    $('choice-yes').classList.toggle('sel-yes', v);
+    $('choice-no').classList.toggle('sel-no', !v);
+    $('rsvp-extra').classList.toggle('hidden', !v);
+    $('rsvp-submit').disabled = false;
+    $('rsvp-submit').textContent = v ? 'Confirmar presença 🥂' : 'Enviar resposta';
+  },
+  renderComps(){
+    const list = $('comp-list');
+    list.innerHTML = this.data.companions.map((c,i) =>
+      `<div class="comp-row"><input type="text" value="${esc(c)}" placeholder="Nome do acompanhante" onchange="RSVP.data.companions[${i}]=this.value">
+       <button class="comp-del" title="Remover" onclick="RSVP.delComp(${i})">×</button></div>`).join('');
+  },
+  addComp(){ this.data.companions.push(''); this.renderComps(); const inputs=$('comp-list').querySelectorAll('input'); inputs[inputs.length-1]?.focus(); },
+  delComp(i){ this.data.companions.splice(i,1); this.renderComps(); },
+  async submit(){
+    if (this.data.attending===null) return;
+    const btn = $('rsvp-submit'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span>';
+    try {
+      const companions = this.data.attending ? this.data.companions.map(c=>c.trim()).filter(Boolean) : [];
+      const payload = {
+        name: this.data.name,
+        status: this.data.attending ? 'confirmado' : 'recusado',
+        companions,
+        phone: $('rsvp-phone').value.trim(),
+        message: $('rsvp-message').value.trim(),
+        respondedAt: Date.now(),
+        source: 'convidado'
+      };
+      if (this.data.matchId) await Store.update('guests', this.data.matchId, payload);
+      else await Store.add('guests', payload);
+      if (this.data.attending){
+        $('done-emoji').textContent='🎉'; $('done-title').textContent='Presença confirmada!';
+        const n = 1 + companions.length;
+        $('done-text').textContent = n>1 ? `Reservamos ${n} lugares para vocês. Mal podemos esperar! 💛` : 'Obrigado! Mal podemos esperar para celebrar com você. 💛';
+      } else {
+        $('done-emoji').textContent='💛'; $('done-title').textContent='Resposta registrada';
+        $('done-text').textContent='Sentiremos sua falta! Obrigado por nos avisar.';
+      }
+      this.show('rsvp-step-done');
+    } catch(e){
+      console.error(e); toast('Erro ao enviar. Tente novamente.');
+    } finally { btn.disabled=false; btn.textContent='Enviar confirmação'; }
+  }
+};
+
+// ---------- PAINEL DO ORGANIZADOR ----------
+const Dash = {
+  started:false, current:'overview', filter:{q:'',status:'',group:''},
+  start(){
+    if (this.started){ this.renderAll(); return; }
+    this.started = true;
+    State.unsubs.push(Store.subscribe('guests', list => { State.guests = list.sort((a,b)=>(b.respondedAt||b.createdAt||0)-(a.respondedAt||a.createdAt||0)); this.renderAll(); }));
+    State.unsubs.push(Store.subscribe('tasks', list => { State.tasks = list.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0)); this.renderChecklist(); this.renderOverview(); }));
+    State.unsubs.push(Store.subscribe('expenses', list => { State.expenses = list.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0)); this.renderBudget(); }));
+    this.tab('overview');
+  },
+  tab(name){
+    this.current = name;
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab===name));
+    ['overview','guests','checklist','budget','messages','settings'].forEach(t => $('tab-'+t).classList.toggle('hidden', t!==name));
+    this.renderAll();
+  },
+  renderAll(){
+    const r = {overview:'renderOverview',guests:'renderGuests',checklist:'renderChecklist',budget:'renderBudget',messages:'renderMessages',settings:'renderSettings'}[this.current];
+    if (r) this[r]();
+  },
+  stats(){
+    const g = State.guests;
+    const conf = g.filter(x=>x.status==='confirmado');
+    const rec = g.filter(x=>x.status==='recusado');
+    const pend = g.filter(x=>!x.status || x.status==='pendente');
+    const pessoas = conf.reduce((s,x)=> s+1+(x.companions?.length||0), 0);
+    return {conf,rec,pend,pessoas,total:g.length};
+  },
+
+  // ===== VISÃO GERAL =====
+  renderOverview(){
+    if (this.current!=='overview') return;
+    const s = this.stats();
+    const c = State.config;
+    const answered = s.conf.length + s.rec.length;
+    const pct = s.total ? Math.round(answered/s.total*100) : 0;
+    const tasksDone = State.tasks.filter(t=>t.done).length;
+    const recent = State.guests.filter(g=>g.respondedAt).slice(0,6);
+    const R=34, C=2*Math.PI*R;
+    const totalAns = Math.max(answered + s.pend.length, 1);
+    const arc1 = s.conf.length/totalAns*C, arc2 = s.rec.length/totalAns*C;
+    $('tab-overview').innerHTML = `
+      <div class="stat-grid">
+        <div class="stat-card ok"><div class="stat-num">${s.conf.length}</div><div class="stat-label">Confirmados</div></div>
+        <div class="stat-card"><div class="stat-num">${s.pessoas}</div><div class="stat-label">Pessoas no total*</div></div>
+        <div class="stat-card bad"><div class="stat-num">${s.rec.length}</div><div class="stat-label">Não vão</div></div>
+        <div class="stat-card pend"><div class="stat-num">${s.pend.length}</div><div class="stat-label">Aguardando</div></div>
+      </div>
+      <p style="font-size:.75rem;color:var(--text-soft);margin:-0.8rem 0 1.2rem">* incluindo acompanhantes dos convidados confirmados</p>
+      <div class="panel">
+        <h3>📈 Andamento das confirmações</h3>
+        <div class="chart-row">
+          <svg width="150" height="150" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="${R}" fill="none" stroke="#f0e8d8" stroke-width="14"/>
+            <circle cx="50" cy="50" r="${R}" fill="none" stroke="#5a8a63" stroke-width="14" stroke-dasharray="${arc1} ${C}" transform="rotate(-90 50 50)" stroke-linecap="${arc1>0?'round':'butt'}"/>
+            <circle cx="50" cy="50" r="${R}" fill="none" stroke="#b05555" stroke-width="14" stroke-dasharray="${arc2} ${C}" stroke-dashoffset="${-arc1}" transform="rotate(-90 50 50)"/>
+            <text x="50" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#31433a">${pct}%</text>
+          </svg>
+          <div class="legend">
+            <div><span class="dot" style="background:#5a8a63"></span>Confirmados: <strong>${s.conf.length}</strong></div>
+            <div><span class="dot" style="background:#b05555"></span>Não vão: <strong>${s.rec.length}</strong></div>
+            <div><span class="dot" style="background:#e0d3ae"></span>Aguardando resposta: <strong>${s.pend.length}</strong></div>
+            <div style="margin-top:.4rem;color:var(--text-soft)">${s.total} convites no total</div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>✅ Planejamento</h3>
+        <div style="display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:.5rem"><span>${tasksDone} de ${State.tasks.length} tarefas concluídas</span><span>${State.tasks.length?Math.round(tasksDone/State.tasks.length*100):0}%</span></div>
+        <div class="progress-outer"><div class="progress-inner" style="width:${State.tasks.length?tasksDone/State.tasks.length*100:0}%"></div></div>
+      </div>
+      <div class="panel">
+        <h3>🕐 Últimas respostas</h3>
+        ${recent.length ? recent.map(g=>`
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.55rem 0;border-bottom:1px solid #f0ebe0;font-size:.92rem">
+            <span><strong>${esc(g.name)}</strong>${g.companions?.length?` <span style="color:var(--text-soft)">+${g.companions.length}</span>`:''}</span>
+            <span class="badge ${g.status}">${g.status==='confirmado'?'✓ Confirmou':'✗ Não vai'}</span>
+          </div>`).join('') : `<div class="empty"><span class="em">💌</span>Nenhuma resposta ainda.<br>Copie o link do site e envie aos convidados!</div>`}
+      </div>`;
+  },
+
+  // ===== CONVIDADOS =====
+  renderGuests(){
+    if (this.current!=='guests') return;
+    const f = this.filter;
+    let list = State.guests;
+    if (f.q) list = list.filter(g => norm(g.name).includes(norm(f.q)) || (g.companions||[]).some(c=>norm(c).includes(norm(f.q))));
+    if (f.status) list = list.filter(g => (g.status||'pendente')===f.status);
+    if (f.group) list = list.filter(g => (g.group||'')===f.group);
+    const s = this.stats();
+    $('tab-guests').innerHTML = `
+      <div class="panel">
+        <h3>👥 Lista de Convidados <span style="font-size:.85rem;color:var(--text-soft);font-weight:400">(${s.total} convites · ${s.pessoas} pessoas confirmadas)</span></h3>
+        <div class="toolbar">
+          <input type="search" placeholder="🔍 Buscar por nome..." value="${esc(f.q)}" oninput="Dash.filter.q=this.value;Dash.renderGuests()">
+          <select onchange="Dash.filter.status=this.value;Dash.renderGuests()">
+            <option value="">Todos os status</option>
+            <option value="confirmado" ${f.status==='confirmado'?'selected':''}>Confirmados</option>
+            <option value="recusado" ${f.status==='recusado'?'selected':''}>Não vão</option>
+            <option value="pendente" ${f.status==='pendente'?'selected':''}>Aguardando</option>
+          </select>
+          <select onchange="Dash.filter.group=this.value;Dash.renderGuests()">
+            <option value="">Todos os grupos</option>
+            ${['Família da noiva','Família do noivo','Amigos','Trabalho','Outros'].map(g=>`<option ${f.group===g?'selected':''}>${g}</option>`).join('')}
+          </select>
+          <button class="btn btn-gold btn-sm" onclick="Dash.guestModal()">+ Adicionar</button>
+          <button class="btn btn-outline btn-sm" onclick="Dash.exportCSV()">⬇ Exportar CSV</button>
+        </div>
+        ${list.length ? `<div style="overflow-x:auto"><table class="g-table">
+          <thead><tr><th>Nome</th><th>Acompanhantes</th><th>Telefone</th><th>Grupo</th><th>Status</th><th></th></tr></thead>
+          <tbody>${list.map(g=>`
+            <tr>
+              <td><strong>${esc(g.name)}</strong>${g.source==='convidado'?' <span title="Confirmou pelo site" style="font-size:.75rem">🌐</span>':''}</td>
+              <td>${(g.companions||[]).map(esc).join(', ')||'—'}</td>
+              <td>${esc(g.phone)||'—'}</td>
+              <td>${esc(g.group)||'—'}</td>
+              <td><span class="badge ${g.status||'pendente'}">${{confirmado:'Confirmado',recusado:'Não vai'}[g.status]||'Aguardando'}</span></td>
+              <td style="white-space:nowrap;text-align:right">
+                <button class="icon-btn" title="Editar" onclick="Dash.guestModal('${g.id}')">✏️</button>
+                <button class="icon-btn" title="Excluir" onclick="Dash.delGuest('${g.id}')">🗑️</button>
+              </td>
+            </tr>`).join('')}</tbody></table></div>`
+        : `<div class="empty"><span class="em">🕊️</span>Nenhum convidado encontrado.<br>Adicione convidados ou aguarde as confirmações pelo site.</div>`}
+      </div>`;
+  },
+  guestModal(id){
+    const g = id ? State.guests.find(x=>x.id===id) : {name:'',phone:'',group:'',status:'pendente',companions:[],notes:''};
+    if (!g) return;
+    this.modal(`
+      <h3>${id?'Editar convidado':'Adicionar convidado'}</h3>
+      <div class="form-grid">
+        <div class="field full"><label>Nome completo *</label><input id="gm-name" value="${esc(g.name)}"></div>
+        <div class="field"><label>Telefone</label><input id="gm-phone" value="${esc(g.phone)}"></div>
+        <div class="field"><label>Grupo</label><select id="gm-group">
+          <option value="">—</option>
+          ${['Família da noiva','Família do noivo','Amigos','Trabalho','Outros'].map(x=>`<option ${g.group===x?'selected':''}>${x}</option>`).join('')}
+        </select></div>
+        <div class="field full"><label>Status</label><select id="gm-status">
+          <option value="pendente" ${(!g.status||g.status==='pendente')?'selected':''}>Aguardando resposta</option>
+          <option value="confirmado" ${g.status==='confirmado'?'selected':''}>Confirmado</option>
+          <option value="recusado" ${g.status==='recusado'?'selected':''}>Não vai</option>
+        </select></div>
+        <div class="field full"><label>Acompanhantes (um por linha)</label><textarea id="gm-comps" placeholder="Nome de cada acompanhante em uma linha">${esc((g.companions||[]).join('\n'))}</textarea></div>
+        <div class="field full"><label>Observações</label><input id="gm-notes" value="${esc(g.notes||'')}" placeholder="Ex.: alergia alimentar, criança, etc."></div>
+      </div>
+      <button class="btn btn-gold" style="width:100%" onclick="Dash.saveGuest('${id||''}')">Salvar</button>`);
+  },
+  async saveGuest(id){
+    const name = $('gm-name').value.trim();
+    if (!name){ toast('Digite o nome do convidado.'); return; }
+    const data = {
+      name, phone:$('gm-phone').value.trim(), group:$('gm-group').value,
+      status:$('gm-status').value, notes:$('gm-notes').value.trim(),
+      companions: $('gm-comps').value.split('\n').map(s=>s.trim()).filter(Boolean)
+    };
+    if (id) await Store.update('guests', id, data);
+    else await Store.add('guests', {...data, source:'organizador'});
+    this.closeModal(); toast('Convidado salvo! ✓');
+  },
+  async delGuest(id){
+    const g = State.guests.find(x=>x.id===id);
+    if (!confirm(`Excluir "${g?.name}" da lista?`)) return;
+    await Store.remove('guests', id); toast('Convidado excluído.');
+  },
+  exportCSV(){
+    const rows = [['Nome','Status','Acompanhantes','Qtd. pessoas','Telefone','Grupo','Recado','Observações']];
+    State.guests.forEach(g => rows.push([
+      g.name, {confirmado:'Confirmado',recusado:'Não vai'}[g.status]||'Aguardando',
+      (g.companions||[]).join('; '), g.status==='confirmado'?1+(g.companions?.length||0):0,
+      g.phone||'', g.group||'', g.message||'', g.notes||''
+    ]));
+    const csv = '﻿' + rows.map(r => r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(';')).join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+    a.download = 'convidados-casamento.csv'; a.click();
+  },
+
+  // ===== CHECKLIST =====
+  SUGGESTED_TASKS: [
+    ['Definir data e local','Local'],['Contratar buffet','Fornecedores'],['Contratar fotógrafo/filmagem','Fornecedores'],
+    ['Escolher vestido da noiva','Trajes'],['Escolher traje do noivo','Trajes'],['Contratar decoração','Fornecedores'],
+    ['Contratar música/DJ/banda','Fornecedores'],['Fazer lista de convidados','Convidados'],['Enviar convites (link do site)','Convidados'],
+    ['Escolher padrinhos e madrinhas','Cerimônia'],['Comprar alianças','Cerimônia'],['Agendar cerimônia (igreja/cartório)','Cerimônia'],
+    ['Definir bolo e doces','Fornecedores'],['Fazer degustação do buffet','Fornecedores'],['Contratar cerimonialista','Fornecedores'],
+    ['Definir lua de mel','Pós-festa'],['Prova final do vestido','Trajes'],['Confirmar número final de convidados','Convidados'],
+    ['Montar mapa de mesas','Convidados'],['Preparar lembrancinhas','Decoração']
+  ],
+  renderChecklist(){
+    if (this.current!=='checklist') return;
+    const tasks = State.tasks;
+    const done = tasks.filter(t=>t.done).length;
+    const cats = [...new Set(tasks.map(t=>t.category||'Geral'))];
+    $('tab-checklist').innerHTML = `
+      <div class="panel">
+        <h3>✅ Checklist do Casamento <span style="font-size:.85rem;color:var(--text-soft);font-weight:400">(${done}/${tasks.length})</span></h3>
+        <div class="progress-outer" style="margin-bottom:1.2rem"><div class="progress-inner" style="width:${tasks.length?done/tasks.length*100:0}%"></div></div>
+        <div class="toolbar">
+          <input type="search" id="task-new" placeholder="Nova tarefa... (Enter para adicionar)" onkeydown="if(event.key==='Enter')Dash.addTask()">
+          <button class="btn btn-gold btn-sm" onclick="Dash.addTask()">+ Adicionar</button>
+          ${!tasks.length?`<button class="btn btn-outline btn-sm" onclick="Dash.loadSuggested()">✨ Carregar sugestões</button>`:''}
+        </div>
+        ${tasks.length ? cats.map(cat => `
+          <div style="margin-top:1rem"><div style="font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:.2rem">${esc(cat)}</div>
+          ${tasks.filter(t=>(t.category||'Geral')===cat).map(t=>`
+            <div class="check-item ${t.done?'done':''}">
+              <input type="checkbox" ${t.done?'checked':''} onchange="Dash.toggleTask('${t.id}',this.checked)">
+              <div class="t"><div class="title">${esc(t.title)}</div>${t.due?`<div class="meta">📅 ${t.due.split('-').reverse().join('/')}</div>`:''}</div>
+              <button class="icon-btn" onclick="Dash.delTask('${t.id}')">🗑️</button>
+            </div>`).join('')}</div>`).join('')
+        : `<div class="empty"><span class="em">📋</span>Sua checklist está vazia.<br>Use "Carregar sugestões" para começar com as tarefas clássicas de um casamento!</div>`}
+      </div>`;
+  },
+  async addTask(){
+    const inp = $('task-new'); const title = inp.value.trim();
+    if (!title) return;
+    await Store.add('tasks', {title, done:false, category:'Geral'});
+    inp.value='';
+  },
+  async loadSuggested(){
+    for (const [title,category] of this.SUGGESTED_TASKS) await Store.add('tasks',{title,category,done:false});
+    toast('Sugestões adicionadas! ✨');
+  },
+  async toggleTask(id,done){ await Store.update('tasks', id, {done}); },
+  async delTask(id){ await Store.remove('tasks', id); },
+
+  // ===== ORÇAMENTO =====
+  renderBudget(){
+    if (this.current!=='budget') return;
+    const ex = State.expenses;
+    const est = ex.reduce((s,e)=>s+(Number(e.estimated)||0),0);
+    const paid = ex.reduce((s,e)=>s+(Number(e.paid)||0),0);
+    $('tab-budget').innerHTML = `
+      <div class="money-summary">
+        <div class="stat-card"><div class="stat-num" style="font-size:1.5rem">${money(est)}</div><div class="stat-label">Orçado</div></div>
+        <div class="stat-card ok"><div class="stat-num" style="font-size:1.5rem">${money(paid)}</div><div class="stat-label">Já pago</div></div>
+        <div class="stat-card pend"><div class="stat-num" style="font-size:1.5rem">${money(est-paid)}</div><div class="stat-label">Restante</div></div>
+      </div>
+      <div class="panel">
+        <h3>💰 Despesas</h3>
+        <div class="toolbar"><button class="btn btn-gold btn-sm" onclick="Dash.expenseModal()">+ Nova despesa</button></div>
+        ${ex.length ? `<div style="overflow-x:auto"><table class="g-table">
+          <thead><tr><th>Descrição</th><th>Categoria</th><th>Orçado</th><th>Pago</th><th></th></tr></thead>
+          <tbody>${ex.map(e=>`<tr>
+            <td><strong>${esc(e.name)}</strong></td><td>${esc(e.category)||'—'}</td>
+            <td>${money(e.estimated)}</td>
+            <td>${money(e.paid)} ${Number(e.paid)>=Number(e.estimated)&&Number(e.estimated)>0?'<span class="badge confirmado">✓ quitado</span>':''}</td>
+            <td style="white-space:nowrap;text-align:right">
+              <button class="icon-btn" onclick="Dash.expenseModal('${e.id}')">✏️</button>
+              <button class="icon-btn" onclick="Dash.delExpense('${e.id}')">🗑️</button>
+            </td></tr>`).join('')}</tbody></table></div>`
+        : `<div class="empty"><span class="em">💐</span>Nenhuma despesa cadastrada ainda.</div>`}
+      </div>`;
+  },
+  expenseModal(id){
+    const e = id ? State.expenses.find(x=>x.id===id) : {name:'',category:'',estimated:'',paid:''};
+    if (!e) return;
+    this.modal(`
+      <h3>${id?'Editar despesa':'Nova despesa'}</h3>
+      <div class="form-grid">
+        <div class="field full"><label>Descrição *</label><input id="em-name" value="${esc(e.name)}" placeholder="Ex.: Buffet"></div>
+        <div class="field full"><label>Categoria</label><select id="em-cat">
+          <option value="">—</option>
+          ${['Buffet e bolo','Local e decoração','Trajes e beleza','Foto e vídeo','Música','Convites e papelaria','Lua de mel','Outros'].map(x=>`<option ${e.category===x?'selected':''}>${x}</option>`).join('')}
+        </select></div>
+        <div class="field"><label>Valor orçado (R$)</label><input id="em-est" type="number" min="0" step="0.01" value="${e.estimated||''}"></div>
+        <div class="field"><label>Valor pago (R$)</label><input id="em-paid" type="number" min="0" step="0.01" value="${e.paid||''}"></div>
+      </div>
+      <button class="btn btn-gold" style="width:100%" onclick="Dash.saveExpense('${id||''}')">Salvar</button>`);
+  },
+  async saveExpense(id){
+    const name = $('em-name').value.trim();
+    if (!name){ toast('Digite a descrição.'); return; }
+    const data = {name, category:$('em-cat').value, estimated:Number($('em-est').value)||0, paid:Number($('em-paid').value)||0};
+    if (id) await Store.update('expenses', id, data);
+    else await Store.add('expenses', data);
+    this.closeModal(); toast('Despesa salva! ✓');
+  },
+  async delExpense(id){ if(confirm('Excluir esta despesa?')){ await Store.remove('expenses', id); } },
+
+  // ===== RECADOS =====
+  renderMessages(){
+    if (this.current!=='messages') return;
+    const msgs = State.guests.filter(g=>g.message).sort((a,b)=>(b.respondedAt||0)-(a.respondedAt||0));
+    $('tab-messages').innerHTML = `
+      <div class="panel">
+        <h3>💌 Recados dos Convidados</h3>
+        ${msgs.length ? msgs.map(g=>`
+          <div class="recado">
+            <div class="who">${esc(g.name)} <span class="badge ${g.status}" style="margin-left:.4rem">${g.status==='confirmado'?'vai':'não vai'}</span></div>
+            <div class="txt">“${esc(g.message)}”</div>
+          </div>`).join('')
+        : `<div class="empty"><span class="em">💕</span>Nenhum recado ainda.<br>Os recados deixados pelos convidados aparecerão aqui.</div>`}
+      </div>`;
+  },
+
+  // ===== CONFIGURAÇÕES =====
+  renderSettings(){
+    if (this.current!=='settings') return;
+    const c = State.config;
+    $('tab-settings').innerHTML = `
+      <div class="panel">
+        <h3>⚙️ Configurações do Site</h3>
+        <p style="font-size:.85rem;color:var(--text-soft);margin-bottom:1.2rem">Tudo que você editar aqui aparece automaticamente na página que os convidados veem.</p>
+        <div class="form-grid">
+          <div class="field"><label>Nome do noivo (exibição)</label><input id="cf-groom" value="${esc(c.groomName)}"></div>
+          <div class="field"><label>Nome da noiva (exibição)</label><input id="cf-bride" value="${esc(c.brideName)}"></div>
+          <div class="field"><label>Nome completo do noivo</label><input id="cf-groomFull" value="${esc(c.groomFull||'')}"></div>
+          <div class="field"><label>Nome completo da noiva</label><input id="cf-brideFull" value="${esc(c.brideFull||'')}"></div>
+          <div class="field"><label>Data do casamento</label><input id="cf-date" type="date" value="${esc(c.date)}"></div>
+          <div class="field"><label>Horário</label><input id="cf-time" type="time" value="${esc(c.time)}"></div>
+          <div class="field full"><label>Local (nome do espaço)</label><input id="cf-venue" value="${esc(c.venue)}" placeholder="Ex.: Espaço Jardim das Flores"></div>
+          <div class="field"><label>Endereço</label><input id="cf-address" value="${esc(c.address)}" placeholder="Rua, número"></div>
+          <div class="field"><label>Cidade</label><input id="cf-city" value="${esc(c.city)}" placeholder="Cidade - UF"></div>
+          <div class="field full"><label>Traje</label><input id="cf-dress" value="${esc(c.dressCode)}" placeholder="Ex.: Esporte fino"></div>
+          <div class="field full"><label>Mensagem do casal (aparece no site)</label><textarea id="cf-message" rows="4">${esc(c.message)}</textarea></div>
+          <div class="field full"><label>Presentes (PIX, lista, loja... — deixe vazio para ocultar)</label><textarea id="cf-gift" rows="2" placeholder="Ex.: Nossa lista de presentes: link... ou chave PIX: ...">${esc(c.giftInfo||'')}</textarea></div>
+        </div>
+        <button class="btn btn-gold" onclick="Dash.saveSettings()">💾 Salvar alterações</button>
+      </div>`;
+  },
+  async saveSettings(){
+    State.config = { ...State.config,
+      groomName:$('cf-groom').value.trim()||'Noivo', brideName:$('cf-bride').value.trim()||'Noiva',
+      groomFull:$('cf-groomFull').value.trim(), brideFull:$('cf-brideFull').value.trim(),
+      date:$('cf-date').value, time:$('cf-time').value,
+      venue:$('cf-venue').value.trim(), address:$('cf-address').value.trim(), city:$('cf-city').value.trim(),
+      dressCode:$('cf-dress').value.trim(), message:$('cf-message').value.trim(), giftInfo:$('cf-gift').value.trim()
+    };
+    await Store.saveConfig(State.config);
+    renderLanding();
+    toast('Configurações salvas! O site já está atualizado ✓');
+  },
+
+  // ===== modais genéricos =====
+  modal(html){
+    $('modal-root').innerHTML = `<div class="overlay" onclick="if(event.target===this)Dash.closeModal()">
+      <div class="modal"><button class="modal-close" onclick="Dash.closeModal()">×</button>${html}</div></div>`;
+  },
+  closeModal(){ $('modal-root').innerHTML=''; }
+};
+window.Dash = Dash;
+
+// ---------- Inicialização ----------
+window.App = App; window.RSVP = RSVP;
+(async function boot(){
+  await initDB();
+  State.config = await Store.getConfig();
+  renderLanding();
+  // atualiza config em tempo real (se firestore)
+  if (DB.mode==='firebase'){
+    DB.fs.onSnapshot(DB.fs.doc(DB.db,'config','main'), snap => {
+      State.config = { ...DEFAULT_CONFIG, ...(snap.exists()?snap.data():{}) };
+      renderLanding();
+      if (!$('view-dash').classList.contains('hidden')) Dash.renderSettings?.();
+    });
+  }
+  $('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') App.login(); });
+  $('rsvp-name').addEventListener('keydown', e => { if(e.key==='Enter') RSVP.stepName(); });
+  if (location.hash==='#painel' && sessionStorage.getItem('jg_auth')==='1') App.showDash();
+  else if (location.hash==='#organizador') App.showLogin();
+})();
+</script>
+</body>
+</html>
