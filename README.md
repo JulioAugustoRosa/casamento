@@ -7,9 +7,11 @@ Site de casamento completo com confirmação de presença (RSVP) e painel do org
 **Para os convidados** (basta enviar o link):
 - Página elegante com data, local, contagem regressiva e mensagem do casal
 - Botão "Confirmar Presença": a pessoa digita o nome, informa acompanhantes, telefone e deixa um recado — sem precisar de login
+- Quem já respondeu vê os dados registrados e pode editá-los (sem duplicar)
+- Mural na página inicial para deixar recados aos noivos
 
-**Para os noivos** (Área do organizador, no rodapé do site):
-- Login: usuário `organizador` (a senha é conhecida por vocês)
+**Para os noivos** (Área do casal, no rodapé do site):
+- Login: usuário `casal` (a senha é conhecida por vocês)
 - 📊 Visão geral: estatísticas em tempo real, gráfico de confirmações, últimas respostas
 - 👥 Convidados: adicionar/editar/excluir, busca, filtros por status e grupo, exportar CSV
 - ✅ Checklist de planejamento (com sugestões prontas)

@@ -198,6 +198,45 @@ a{color:var(--gold);text-decoration:none}
 .legend .dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:.5rem}
 .spin{display:inline-block;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+/* ============ RESPONSIVO / ÁREAS DE TOQUE ============ */
+*{-webkit-tap-highlight-color:rgba(184,150,90,.25)}
+button,.btn,.tab,.icon-btn,a{touch-action:manipulation}
+.btn{min-height:46px}
+.icon-btn{padding:.5rem .6rem;font-size:1.05rem;line-height:1;min-width:38px;min-height:38px}
+.scroll-hint{pointer-events:none}
+.modal-close{padding:.4rem .6rem;min-width:40px;min-height:40px}
+.comp-del{min-width:40px;min-height:40px}
+.add-comp{padding:.6rem 0;min-height:42px}
+.guestbook-card{background:var(--white);border:1px solid var(--gold-pale);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:2.2rem 1.8rem;max-width:560px;margin:0 auto}
+.guestbook-success{text-align:center;padding:1.4rem 0}
+.guestbook-success .em{font-size:2.6rem;display:block;margin-bottom:.5rem}
+.guestbook-success h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--green-dark);margin-bottom:.3rem}
+.guestbook-success p{color:var(--text-soft)}
+.existing-info{background:var(--ivory);border:1.5px solid var(--gold-pale);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:.93rem;text-align:left}
+.existing-info div{margin:.3rem 0}
+.existing-info .lbl{font-weight:600;color:var(--green-dark)}
+@media(max-width:720px){
+  .dash-header{position:static}
+  .tabs{position:sticky;top:0;padding-top:.6rem}
+}
+@media(max-width:640px){
+  .field input,.field select,.field textarea,.comp-row input,.toolbar input[type=search],.toolbar select{font-size:16px}
+  .modal{padding:1.8rem 1.2rem;border-radius:18px}
+  .hero-actions{flex-direction:column;align-items:center}
+  .hero-actions .btn{width:100%;max-width:320px}
+  .toolbar .btn{flex:1}
+  .dash-body{padding:1.2rem .8rem 3rem}
+  .panel{padding:1.2rem 1rem}
+}
+@media(max-width:480px){
+  .count-box{min-width:62px;padding:.65rem .35rem;border-radius:11px}
+  .count-num{font-size:1.55rem}
+  .count-label{font-size:.58rem}
+  .countdown{gap:.5rem}
+  .section{padding:3.2rem 1.1rem}
+  .stat-grid{grid-template-columns:1fr 1fr}
+  .hero{padding:2.2rem 1.1rem}
+}
 @media print{.dash-header,.tabs,.toolbar,.icon-btn,.dash-actions{display:none!important}}
 </style>
 </head>
@@ -241,11 +280,38 @@ a{color:var(--gold);text-decoration:none}
     </div>
   </section>
 
+  <section class="section" id="recados" style="padding-top:0">
+    <div class="section-title">
+      <span class="script-sub">com carinho</span>
+      <h2>Deixe um Recado para os Noivos</h2>
+    </div>
+    <div class="guestbook-card">
+      <div id="gb-form">
+        <div class="field">
+          <label>Seu nome</label>
+          <input type="text" id="gb-name" placeholder="Ex.: Maria da Silva" autocomplete="name">
+        </div>
+        <div class="field">
+          <label>Seu recado</label>
+          <textarea id="gb-message" rows="4" placeholder="Escreva uma mensagem carinhosa para Júlio &amp; Grazielly..."></textarea>
+          <div class="error-txt hidden" id="gb-err">Preencha seu nome e o recado, por favor.</div>
+        </div>
+        <button class="btn btn-gold" style="width:100%" id="gb-send" onclick="Guestbook.send()">Enviar recado 💌</button>
+      </div>
+      <div id="gb-done" class="guestbook-success hidden">
+        <span class="em">💛</span>
+        <h3>Recado enviado!</h3>
+        <p>Os noivos vão adorar ler sua mensagem.</p>
+        <button class="btn btn-outline" style="margin-top:1.2rem" onclick="Guestbook.reset()">Enviar outro recado</button>
+      </div>
+    </div>
+  </section>
+
   <footer class="footer">
     <span class="script" id="f-names">Júlio &amp; Grazielly</span>
     <span id="f-date">19 de dezembro</span><br>
     Feito com ♥ para o nosso grande dia<br>
-    <a class="organizer-link" href="#organizador" onclick="App.showLogin()">Área do organizador</a>
+    <a class="organizer-link" href="#organizador" onclick="App.showLogin()">Área do casal</a>
   </footer>
 </div>
 
@@ -264,6 +330,14 @@ a{color:var(--gold);text-decoration:none}
       </div>
       <div id="rsvp-match" class="hidden"></div>
       <button class="btn btn-gold" style="width:100%" onclick="RSVP.stepName()">Continuar →</button>
+    </div>
+
+    <div id="rsvp-step-existing" class="hidden">
+      <h3>Encontramos sua resposta! ✨</h3>
+      <p class="sub">Aqui está o que temos registrado para você:</p>
+      <div class="existing-info" id="ex-info"></div>
+      <button class="btn btn-gold" style="width:100%" onclick="RSVP.edit()">✏️ Editar minhas informações</button>
+      <button class="btn btn-ghost" style="width:100%;margin-top:.6rem" onclick="RSVP.close()">Está tudo certo, fechar</button>
     </div>
 
     <div id="rsvp-step-confirm" class="hidden">
@@ -306,10 +380,10 @@ a{color:var(--gold);text-decoration:none}
 <div id="view-login" class="login-wrap hidden">
   <div class="login-card">
     <span class="script">J &amp; G</span>
-    <h2>Área do Organizador</h2>
+    <h2>Área do Casal</h2>
     <div class="field" style="text-align:left">
       <label>Usuário</label>
-      <input type="text" id="login-user" placeholder="usuário" autocomplete="username">
+      <input type="text" id="login-user" placeholder="casal" autocomplete="username">
     </div>
     <div class="field" style="text-align:left">
       <label>Senha</label>
@@ -379,7 +453,7 @@ const DEFAULT_CONFIG = {
   message:'Com a bênção de Deus e de nossas famílias, temos a alegria de convidar você para celebrar conosco o nosso casamento. Sua presença tornará esse dia ainda mais especial!',
   giftInfo:''
 };
-const ORG_USER = 'organizador';
+const ORG_USER = 'casal';
 const ORG_HASH = '1b149bf8eca3dbeefbc35dbbdb673acf4bb7d39c47e84466d7243e5aecb2be60';
 
 // ---------- Camada de dados (Firestore ou localStorage) ----------
@@ -449,7 +523,7 @@ const Store = {
 };
 
 // ---------- Estado global ----------
-const State = { config:{...DEFAULT_CONFIG}, guests:[], tasks:[], expenses:[], unsubs:[] };
+const State = { config:{...DEFAULT_CONFIG}, guests:[], tasks:[], expenses:[], recados:[], unsubs:[] };
 
 // ---------- App (navegação) ----------
 const App = {
@@ -521,16 +595,16 @@ function startCountdown(){
 
 // ---------- RSVP (fluxo do convidado) ----------
 const RSVP = {
-  data:{ name:'', attending:null, companions:[], phone:'', message:'', matchId:null },
+  data:{ name:'', attending:null, companions:[], phone:'', message:'', matchId:null, match:null },
   open(){
-    this.data = { name:'', attending:null, companions:[], phone:'', message:'', matchId:null };
+    this.data = { name:'', attending:null, companions:[], phone:'', message:'', matchId:null, match:null };
     $('rsvp-overlay').classList.remove('hidden');
     this.show('rsvp-step-name');
     $('rsvp-name').value=''; $('rsvp-match').classList.add('hidden'); $('rsvp-name-err').classList.add('hidden');
     setTimeout(()=>$('rsvp-name').focus(),100);
   },
   close(){ $('rsvp-overlay').classList.add('hidden'); },
-  show(id){ ['rsvp-step-name','rsvp-step-confirm','rsvp-step-done'].forEach(s=>$(s).classList.add('hidden')); $(id).classList.remove('hidden'); },
+  show(id){ ['rsvp-step-name','rsvp-step-existing','rsvp-step-confirm','rsvp-step-done'].forEach(s=>$(s).classList.add('hidden')); $(id).classList.remove('hidden'); },
   async stepName(){
     const name = $('rsvp-name').value.trim();
     if (name.length < 3 || !name.includes(' ')){ $('rsvp-name-err').classList.remove('hidden'); return; }
@@ -540,26 +614,46 @@ const RSVP = {
     const all = await Store.list('guests');
     const n = norm(name);
     const match = all.find(g => norm(g.name)===n) || all.find(g => norm(g.name).includes(n) || n.includes(norm(g.name)));
-    const box = $('rsvp-match');
     if (match){
       this.data.matchId = match.id;
-      if (match.status && match.status!=='pendente'){
-        box.innerHTML = `<div class="match-card">✨ <strong>${esc(match.name)}</strong>, encontramos uma resposta sua (${match.status==='confirmado'?'presença confirmada':'não poderá ir'}). Você pode atualizá-la abaixo.</div>`;
-      } else {
-        box.innerHTML = `<div class="match-card">✨ Encontramos seu convite, <strong>${esc(match.name)}</strong>!</div>`;
-      }
-      box.classList.remove('hidden');
+      this.data.match = match;
       this.data.name = match.name;
       if (match.companions?.length) this.data.companions = [...match.companions];
       if (match.phone) this.data.phone = match.phone;
+      // Já respondeu antes? Mostra os dados registrados e oferece edição
+      if (match.status && match.status!=='pendente'){
+        const comps = (match.companions||[]).length ? (match.companions||[]).map(esc).join(', ') : 'Nenhum';
+        $('ex-info').innerHTML = `
+          <div><span class="lbl">Nome:</span> ${esc(match.name)}</div>
+          <div><span class="lbl">Presença:</span> ${match.status==='confirmado' ? '🥂 Confirmada' : '😢 Não poderá ir'}</div>
+          <div><span class="lbl">Acompanhantes:</span> ${comps}</div>
+          ${match.phone ? `<div><span class="lbl">Telefone:</span> ${esc(match.phone)}</div>` : ''}
+          ${match.message ? `<div><span class="lbl">Recado:</span> “${esc(match.message)}”</div>` : ''}`;
+        this.show('rsvp-step-existing');
+        return;
+      }
+      $('rsvp-match').innerHTML = `<div class="match-card">✨ Encontramos seu convite, <strong>${esc(match.name)}</strong>!</div>`;
+      $('rsvp-match').classList.remove('hidden');
     }
+    this.openConfirmStep(null);
+  },
+  // Abre o passo de confirmação; se attending vier preenchido, pré-seleciona (modo edição)
+  openConfirmStep(attending, message){
     $('rsvp-greet').textContent = `Olá, ${this.data.name.split(' ')[0]}! 💛`;
     this.data.attending = null;
     $('choice-yes').classList.remove('sel-yes'); $('choice-no').classList.remove('sel-no');
     $('rsvp-extra').classList.add('hidden'); $('rsvp-submit').disabled = true;
-    $('rsvp-phone').value = this.data.phone || ''; $('rsvp-message').value='';
+    $('rsvp-submit').textContent = 'Enviar confirmação';
+    $('rsvp-phone').value = this.data.phone || '';
+    $('rsvp-message').value = message || '';
     this.renderComps();
     this.show('rsvp-step-confirm');
+    if (attending !== null && attending !== undefined) this.setAttending(attending);
+  },
+  // Edição de uma resposta já registrada
+  edit(){
+    const m = this.data.match;
+    this.openConfirmStep(m ? m.status==='confirmado' : null, m?.message || '');
   },
   setAttending(v){
     this.data.attending = v;
@@ -608,6 +702,27 @@ const RSVP = {
   }
 };
 
+// ---------- MURAL DE RECADOS (landing page) ----------
+const Guestbook = {
+  async send(){
+    const name = $('gb-name').value.trim();
+    const msg = $('gb-message').value.trim();
+    if (name.length < 2 || !msg){ $('gb-err').classList.remove('hidden'); return; }
+    $('gb-err').classList.add('hidden');
+    const btn = $('gb-send'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span>';
+    try {
+      await Store.add('recados', { name, message: msg });
+      $('gb-form').classList.add('hidden');
+      $('gb-done').classList.remove('hidden');
+    } catch(e){ console.error(e); toast('Erro ao enviar. Tente novamente.'); }
+    finally { btn.disabled = false; btn.textContent = 'Enviar recado 💌'; }
+  },
+  reset(){
+    $('gb-name').value=''; $('gb-message').value='';
+    $('gb-done').classList.add('hidden'); $('gb-form').classList.remove('hidden');
+  }
+};
+
 // ---------- PAINEL DO ORGANIZADOR ----------
 const Dash = {
   started:false, current:'overview', filter:{q:'',status:'',group:''},
@@ -617,6 +732,7 @@ const Dash = {
     State.unsubs.push(Store.subscribe('guests', list => { State.guests = list.sort((a,b)=>(b.respondedAt||b.createdAt||0)-(a.respondedAt||a.createdAt||0)); this.renderAll(); }));
     State.unsubs.push(Store.subscribe('tasks', list => { State.tasks = list.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0)); this.renderChecklist(); this.renderOverview(); }));
     State.unsubs.push(Store.subscribe('expenses', list => { State.expenses = list.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0)); this.renderBudget(); }));
+    State.unsubs.push(Store.subscribe('recados', list => { State.recados = list; this.renderMessages(); }));
     this.tab('overview');
   },
   tab(name){
@@ -891,17 +1007,28 @@ const Dash = {
   // ===== RECADOS =====
   renderMessages(){
     if (this.current!=='messages') return;
-    const msgs = State.guests.filter(g=>g.message).sort((a,b)=>(b.respondedAt||0)-(a.respondedAt||0));
+    const fromRsvp = State.guests.filter(g=>g.message).map(g=>({name:g.name, message:g.message, time:g.respondedAt||g.createdAt||0, type:'rsvp', status:g.status}));
+    const fromMural = (State.recados||[]).map(r=>({name:r.name, message:r.message, time:r.createdAt||0, type:'mural', id:r.id}));
+    const msgs = [...fromRsvp, ...fromMural].sort((a,b)=>b.time-a.time);
     $('tab-messages').innerHTML = `
       <div class="panel">
-        <h3>💌 Recados dos Convidados</h3>
-        ${msgs.length ? msgs.map(g=>`
+        <h3>💌 Recados dos Convidados <span style="font-size:.85rem;color:var(--text-soft);font-weight:400">(${msgs.length})</span></h3>
+        ${msgs.length ? msgs.map(m=>`
           <div class="recado">
-            <div class="who">${esc(g.name)} <span class="badge ${g.status}" style="margin-left:.4rem">${g.status==='confirmado'?'vai':'não vai'}</span></div>
-            <div class="txt">“${esc(g.message)}”</div>
+            <div class="who" style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap">${esc(m.name)}
+              ${m.type==='rsvp'
+                ? `<span class="badge ${m.status}">${m.status==='confirmado'?'vai':'não vai'}</span>`
+                : `<span class="badge pendente">💌 mural</span>`}
+              ${m.type==='mural' ? `<button class="icon-btn" title="Excluir recado" style="margin-left:auto" onclick="Dash.delRecado('${m.id}')">🗑️</button>` : ''}
+            </div>
+            <div class="txt">“${esc(m.message)}”</div>
           </div>`).join('')
-        : `<div class="empty"><span class="em">💕</span>Nenhum recado ainda.<br>Os recados deixados pelos convidados aparecerão aqui.</div>`}
+        : `<div class="empty"><span class="em">💕</span>Nenhum recado ainda.<br>Os recados da confirmação de presença e do mural do site aparecerão aqui.</div>`}
       </div>`;
+  },
+  async delRecado(id){
+    if (!confirm('Excluir este recado?')) return;
+    await Store.remove('recados', id); toast('Recado excluído.');
   },
 
   // ===== CONFIGURAÇÕES =====
@@ -952,7 +1079,7 @@ const Dash = {
 window.Dash = Dash;
 
 // ---------- Inicialização ----------
-window.App = App; window.RSVP = RSVP;
+window.App = App; window.RSVP = RSVP; window.Guestbook = Guestbook;
 (async function boot(){
   await initDB();
   State.config = await Store.getConfig();
@@ -967,6 +1094,7 @@ window.App = App; window.RSVP = RSVP;
   }
   $('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') App.login(); });
   $('rsvp-name').addEventListener('keydown', e => { if(e.key==='Enter') RSVP.stepName(); });
+  $('gb-name').addEventListener('keydown', e => { if(e.key==='Enter') $('gb-message').focus(); });
   if (location.hash==='#painel' && sessionStorage.getItem('jg_auth')==='1') App.showDash();
   else if (location.hash==='#organizador') App.showLogin();
 })();

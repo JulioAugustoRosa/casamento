@@ -11,7 +11,11 @@ service cloud.firestore {
       allow read: if true;
       allow write: if true;
     }
-    // Checklist e orçamento (painel do organizador)
+    // Mural de recados da página inicial
+    match /recados/{id} {
+      allow read, create, delete: if true;
+    }
+    // Checklist e orçamento (painel do casal)
     match /tasks/{id} { allow read, write: if true; }
     match /expenses/{id} { allow read, write: if true; }
     // Bloqueia qualquer outra coleção
