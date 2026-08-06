@@ -253,6 +253,7 @@ button,.btn,.tab,.icon-btn,a{touch-action:manipulation}
       <div class="countdown" id="countdown"></div>
       <div class="hero-actions">
         <button class="btn btn-gold" onclick="RSVP.open()">💌 &nbsp;Confirmar Presença</button>
+        <a class="btn btn-outline hidden" id="l-maps-hero" target="_blank" rel="noopener">📍 Como Chegar</a>
         <a class="btn btn-outline" href="#detalhes">Ver Detalhes</a>
       </div>
     </div>
@@ -266,7 +267,7 @@ button,.btn,.tab,.icon-btn,a{touch-action:manipulation}
     </div>
     <div class="info-grid">
       <div class="info-card"><div class="icon">📅</div><h3>Data &amp; Horário</h3><p id="l-datetime">19 de dezembro • 16h00</p></div>
-      <div class="info-card"><div class="icon">📍</div><h3>Local</h3><p id="l-venue">Local a confirmar</p></div>
+      <div class="info-card"><div class="icon">📍</div><h3>Local</h3><p id="l-venue">Local a confirmar</p><a id="l-maps-card" class="btn btn-gold btn-sm hidden" style="margin-top:1rem" target="_blank" rel="noopener">🗺️ Ver no Google Maps</a></div>
       <div class="info-card"><div class="icon">👗</div><h3>Traje</h3><p id="l-dress">Esporte fino</p></div>
       <div class="info-card" id="card-gift" style="display:none"><div class="icon">🎁</div><h3>Presentes</h3><p id="l-gift"></p></div>
     </div>
@@ -448,7 +449,7 @@ const DEFAULT_CONFIG = {
   groomName:'Júlio', brideName:'Grazielly',
   groomFull:'Júlio Augusto Rosa', brideFull:'Grazielly Dias de Oliveira',
   date:'2026-12-19', time:'16:00',
-  venue:'Local a confirmar', address:'', city:'',
+  venue:'Local a confirmar', address:'', city:'', mapsUrl:'',
   dressCode:'Esporte fino',
   message:'Com a bênção de Deus e de nossas famílias, temos a alegria de convidar você para celebrar conosco o nosso casamento. Sua presença tornará esse dia ainda mais especial!',
   giftInfo:''
@@ -570,6 +571,14 @@ function renderLanding(){
   $('l-venue').textContent = placeParts.join('\n') || 'Local a confirmar';
   $('l-place-short').textContent = [c.venue,c.city].filter(Boolean).join(' — ');
   $('l-dress').textContent = c.dressCode || 'Traje livre';
+  // Botão "Como Chegar" → Google Maps (link definido no painel ou montado pelo endereço)
+  const mapsQuery = [c.venue, c.address, c.city].filter(x => x && x !== 'Local a confirmar').join(', ');
+  const mapsUrl = (c.mapsUrl||'').trim() || (mapsQuery ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(mapsQuery) : '');
+  ['l-maps-hero','l-maps-card'].forEach(id => {
+    const el = $(id); if (!el) return;
+    if (mapsUrl){ el.href = mapsUrl; el.classList.remove('hidden'); }
+    else el.classList.add('hidden');
+  });
   $('l-message').textContent = c.message || DEFAULT_CONFIG.message;
   if (c.giftInfo){ $('card-gift').style.display=''; $('l-gift').textContent = c.giftInfo; }
   else $('card-gift').style.display='none';
@@ -1049,6 +1058,7 @@ const Dash = {
           <div class="field full"><label>Local (nome do espaço)</label><input id="cf-venue" value="${esc(c.venue)}" placeholder="Ex.: Espaço Jardim das Flores"></div>
           <div class="field"><label>Endereço</label><input id="cf-address" value="${esc(c.address)}" placeholder="Rua, número"></div>
           <div class="field"><label>Cidade</label><input id="cf-city" value="${esc(c.city)}" placeholder="Cidade - UF"></div>
+          <div class="field full"><label>Link do Google Maps (para o botão "Como Chegar")</label><input id="cf-maps" value="${esc(c.mapsUrl||'')}" placeholder="Cole aqui o link do local no Google Maps — se vazio, o botão usa o endereço acima"></div>
           <div class="field full"><label>Traje</label><input id="cf-dress" value="${esc(c.dressCode)}" placeholder="Ex.: Esporte fino"></div>
           <div class="field full"><label>Mensagem do casal (aparece no site)</label><textarea id="cf-message" rows="4">${esc(c.message)}</textarea></div>
           <div class="field full"><label>Presentes (PIX, lista, loja... — deixe vazio para ocultar)</label><textarea id="cf-gift" rows="2" placeholder="Ex.: Nossa lista de presentes: link... ou chave PIX: ...">${esc(c.giftInfo||'')}</textarea></div>
@@ -1061,7 +1071,7 @@ const Dash = {
       groomName:$('cf-groom').value.trim()||'Noivo', brideName:$('cf-bride').value.trim()||'Noiva',
       groomFull:$('cf-groomFull').value.trim(), brideFull:$('cf-brideFull').value.trim(),
       date:$('cf-date').value, time:$('cf-time').value,
-      venue:$('cf-venue').value.trim(), address:$('cf-address').value.trim(), city:$('cf-city').value.trim(),
+      venue:$('cf-venue').value.trim(), address:$('cf-address').value.trim(), city:$('cf-city').value.trim(), mapsUrl:$('cf-maps').value.trim(),
       dressCode:$('cf-dress').value.trim(), message:$('cf-message').value.trim(), giftInfo:$('cf-gift').value.trim()
     };
     await Store.saveConfig(State.config);
