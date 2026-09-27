@@ -92,10 +92,9 @@ window.SITE = {
 
     // Informações práticas (cards)
     avisos: [
-      { icone: '👗', titulo: 'Traje das madrinhas', texto: 'Vestido longo na cor verde-oliva.\nSapato e acessórios em tons dourados.' },
-      { icone: '🤵', titulo: 'Traje dos padrinhos', texto: 'Terno preto, camisa branca e gravata verde-oliva.\nSapato social preto.' },
-      { icone: '⏰', titulo: 'Horário de chegada', texto: 'Pedimos que estejam no local às 15h00,\numa hora antes da cerimônia.' },
-      { icone: '📸', titulo: 'Ensaio', texto: 'Ensaio da entrada no dia 12 de dezembro, às 19h,\nno próprio local da cerimônia.' }
+      { icone: '👗', titulo: 'Traje das madrinhas', texto: 'Vestido na cor rosa fúcsia.' },
+      { icone: '🤵', titulo: 'Traje dos padrinhos', texto: 'Terno cinza médio, camisa branca\ne gravata combinando com o terno.' },
+      { icone: '⏰', titulo: 'Horário de chegada', texto: 'Pedimos que estejam no local às 11h,\numa hora antes do início da cerimônia.' }
     ],
 
     // Link do grupo (deixe '' para esconder o botão)
