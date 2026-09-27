@@ -392,6 +392,21 @@ body.menu-open #menu a{opacity:1;transform:none}
 .match-card{border:1.5px solid var(--gold-light);background:var(--gold-pale);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1rem;font-size:.95rem}
 .error-txt{color:var(--danger);font-size:.85rem;margin-top:.4rem}
 .notice{background:#fdf6e7;border:1px solid var(--gold-light);color:#8a6d3b;border-radius:12px;padding:.8rem 1rem;font-size:.85rem;margin-bottom:1.2rem}
+/* famílias no RSVP */
+.fam-label{text-align:center;font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--green-dark);margin:.2rem 0 1rem}
+.fam-members{margin:.4rem 0 1.2rem;border:1.5px solid var(--gold-pale);border-radius:14px;padding:.4rem 1rem}
+.mrow{display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.65rem .1rem;border-bottom:1px solid #f0ebe0}
+.mrow:last-child{border-bottom:none}
+.mname{font-weight:500;font-size:.98rem;flex:1;min-width:0}
+.mtog{display:flex;gap:.4rem;flex-shrink:0}
+.mgo,.mno{border:1.5px solid #e5ddcf;border-radius:50px;padding:.45rem .85rem;font-size:.82rem;font-weight:600;color:var(--text-soft);background:var(--ivory);white-space:nowrap;min-height:40px}
+.mgo.on{border-color:var(--ok);background:#eef6ef;color:var(--ok)}
+.mno.on{border-color:var(--danger);background:#fbeeee;color:var(--danger)}
+.pick-list{margin:.6rem 0 .4rem}
+.mb{display:inline-block;font-size:.78rem;padding:.15rem .55rem;border-radius:50px;margin:.1rem .2rem .1rem 0;background:#f0ebe0;color:var(--text-soft)}
+.mb.y{background:#e5f2e6;color:var(--ok)}
+.mb.n{background:#fbeeee;color:var(--danger)}
+.badge.parcial{background:#eaf1fb;color:#4a6fa5}
 
 /* ============ LOGIN ============ */
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:radial-gradient(ellipse at 50% 0%,rgba(217,194,148,.22),transparent 60%),var(--ivory)}
@@ -711,47 +726,37 @@ button,.btn,.tab,.icon-btn,a{touch-action:manipulation}
 
     <div id="rsvp-step-name">
       <h3>Confirmação de Presença</h3>
-      <p class="sub">Que alegria ter você conosco! Digite seu nome completo para começar.</p>
+      <p class="sub">Que alegria ter você conosco! Digite seu <strong>nome</strong> para encontrarmos o seu convite. Pode ser só o primeiro nome. 💛</p>
       <div class="field">
-        <label>Seu nome completo</label>
-        <input type="text" id="rsvp-name" placeholder="Ex.: Maria da Silva" autocomplete="name">
-        <div class="error-txt hidden" id="rsvp-name-err">Por favor, digite seu nome completo.</div>
+        <label>Seu nome</label>
+        <input type="text" id="rsvp-name" placeholder="Ex.: Miriam" autocomplete="name">
+        <div class="error-txt hidden" id="rsvp-name-err">Por favor, digite seu nome.</div>
       </div>
-      <div id="rsvp-match" class="hidden"></div>
       <button class="btn btn-gold" style="width:100%" onclick="RSVP.stepName()">Continuar →</button>
     </div>
 
-    <div id="rsvp-step-existing" class="hidden">
-      <h3>Encontramos sua resposta! ✨</h3>
-      <p class="sub">Aqui está o que temos registrado para você:</p>
-      <div class="existing-info" id="ex-info"></div>
-      <button class="btn btn-gold" style="width:100%" onclick="RSVP.edit()">✏️ Editar minhas informações</button>
-      <button class="btn btn-ghost" style="width:100%;margin-top:.6rem" onclick="RSVP.close()">Está tudo certo, fechar</button>
+    <div id="rsvp-step-pick" class="hidden">
+      <h3>Qual é o seu convite?</h3>
+      <p class="sub">Encontramos mais de um convite com esse nome. Toque no seu:</p>
+      <div class="pick-list" id="rsvp-pick-list"></div>
+      <button class="btn btn-ghost" style="width:100%;margin-top:.4rem" onclick="RSVP.show('rsvp-step-name')">← Voltar</button>
     </div>
 
-    <div id="rsvp-step-confirm" class="hidden">
-      <h3 id="rsvp-greet">Olá!</h3>
-      <p class="sub">Você poderá comparecer ao casamento?</p>
-      <div class="choice-row">
-        <button class="choice" id="choice-yes" onclick="RSVP.setAttending(true)"><span class="em">🥂</span><span>Sim, estarei lá!</span></button>
-        <button class="choice" id="choice-no" onclick="RSVP.setAttending(false)"><span class="em">😢</span><span>Não poderei ir</span></button>
-      </div>
-      <div id="rsvp-extra" class="hidden">
-        <div class="field">
-          <label>Acompanhantes <span style="text-transform:none;font-weight:400">(se houver)</span></label>
-          <div id="comp-list"></div>
-          <button class="add-comp" onclick="RSVP.addComp()">+ Adicionar acompanhante</button>
-        </div>
-        <div class="field">
-          <label>Telefone / WhatsApp <span style="text-transform:none;font-weight:400">(opcional)</span></label>
-          <input type="tel" id="rsvp-phone" placeholder="(00) 00000-0000">
-        </div>
+    <div id="rsvp-step-family" class="hidden">
+      <h3 id="rsvp-fam-greet">Confirme sua presença</h3>
+      <p class="sub" id="rsvp-fam-sub">Toque em cada nome para marcar quem vai e quem não vai.</p>
+      <div class="fam-label" id="rsvp-fam-label"></div>
+      <div class="fam-members" id="rsvp-members"></div>
+      <div class="field">
+        <label>Telefone / WhatsApp <span style="text-transform:none;font-weight:400">(opcional)</span></label>
+        <input type="tel" id="rsvp-phone" placeholder="(00) 00000-0000">
       </div>
       <div class="field">
         <label>Recado para os noivos <span style="text-transform:none;font-weight:400">(opcional)</span></label>
         <textarea id="rsvp-message" placeholder="Deixe uma mensagem carinhosa..."></textarea>
       </div>
-      <button class="btn btn-gold" style="width:100%" id="rsvp-submit" onclick="RSVP.submit()" disabled>Enviar confirmação</button>
+      <button class="btn btn-gold" style="width:100%" id="rsvp-submit" onclick="RSVP.submit()">Enviar confirmação</button>
+      <button class="btn btn-ghost" style="width:100%;margin-top:.4rem" onclick="RSVP.show('rsvp-step-name')">← Não é você? Voltar</button>
     </div>
 
     <div id="rsvp-step-done" class="hidden">
@@ -817,6 +822,7 @@ button,.btn,.tab,.icon-btn,a{touch-action:manipulation}
 
 <div id="modal-root"></div>
 <script src="fotos.js"></script>
+<script src="familias.js"></script>
 <script src="firebase-config.js"></script>
 <script type="module">
 /* =====================================================================
@@ -833,6 +839,77 @@ const money = (v) => (Number(v)||0).toLocaleString('pt-BR',{style:'currency',cur
 const MESES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 async function sha256(t){ const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)); return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(''); }
 function toast(msg){ document.querySelectorAll('.toast').forEach(t=>t.remove()); const d=document.createElement('div'); d.className='toast'; d.textContent=msg; document.body.appendChild(d); setTimeout(()=>d.remove(),2600); }
+
+// ---------- Modelo de FAMÍLIAS / convites ----------
+// Um "convite" é uma família com vários membros; cada membro tem vai = true/false/null.
+const slugify = (s) => norm(s).replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+const familyId = (fam) => 'fam-' + (slugify(fam) || uid());
+
+// Lista fixa vinda de familias.js (window.FAMILIAS)
+function seedFamilies(){
+  return (window.FAMILIAS || []).map(f => {
+    const membros = (f.membros || f.pessoas || [])
+      .map(m => typeof m === 'string' ? {nome:m, vai:null} : {nome:(m.nome||m.name||''), vai:(m.vai ?? null)})
+      .filter(m => m.nome && m.nome.trim());
+    return {
+      id: f.id ? String(f.id) : familyId(f.familia || f.nome || membros[0]?.nome || ''),
+      familia: f.familia || f.nome || (membros[0]?.nome) || 'Convidados',
+      membros, group: f.grupo || f.group || '',
+      phone:'', message:'', notes:'', respondedAt:0, createdAt:0,
+      status:'pendente', source:'lista', seed:true
+    };
+  }).filter(f => f.membros.length);
+}
+
+// Documento do banco -> forma normalizada de família (aceita registros antigos nome+companions)
+function normGuest(g){
+  let membros = g.membros;
+  if (!membros){
+    const vai = g.status==='confirmado' ? true : (g.status==='recusado' ? false : null);
+    membros = [{nome:g.name||'', vai}].concat((g.companions||[]).map(c => ({nome:c, vai})));
+    membros = membros.filter(m => m.nome && m.nome.trim());
+  }
+  return {
+    id:g.id, familia:g.familia || g.name || 'Convidados', membros,
+    group:g.group||'', phone:g.phone||'', message:g.message||'', notes:g.notes||'',
+    respondedAt:g.respondedAt||0, createdAt:g.createdAt||0, source:g.source||'',
+    hidden:!!g.hidden, status:g.status
+  };
+}
+
+// Busca tolerante: sem acento, sem caso, aceita primeiro nome e digitação parcial
+const NAME_STOP = new Set(['tio','tia','sr','sra','dona','familia','vovo','vovoo']);
+function nameTokens(s){ return norm(s).split(' ').filter(w => w.length >= 2 && !NAME_STOP.has(w)); }
+function nameHit(nameStr, qTokens){
+  const nw = nameTokens(nameStr);
+  return qTokens.some(q => nw.some(w => w===q || w.startsWith(q) || q.startsWith(w)));
+}
+
+// Status da família a partir dos membros
+function familyStatus(f){
+  const ms = f.membros || [];
+  const resp = ms.filter(m => m.vai===true || m.vai===false);
+  if (!resp.length) return 'pendente';
+  const vao = ms.filter(m => m.vai===true).length;
+  if (vao===0) return 'recusado';
+  if (vao===ms.length) return 'confirmado';
+  return 'parcial';
+}
+
+// Junta a lista fixa (familias.js) com o banco (respostas + adições manuais)
+function mergedInvited(fsDocs){
+  const map = new Map();
+  seedFamilies().forEach(f => map.set(f.id, f));
+  (fsDocs||[]).forEach(d => {
+    const n = normGuest(d);
+    const prev = map.get(n.id);
+    if (n.hidden){ map.delete(n.id); return; }
+    map.set(n.id, { ...(prev||{}), ...n, seed: prev?.seed || false });
+  });
+  const arr = [...map.values()].filter(f => !f.hidden);
+  arr.forEach(f => { f.status = familyStatus(f); });
+  return arr;
+}
 
 const DEFAULT_CONFIG = {
   groomName:'Júlio', brideName:'Grazielly',
@@ -906,6 +983,14 @@ const Store = {
     const arr = LS.get(coll,[]); const i = arr.findIndex(x=>x.id===id);
     if (i>=0){ arr[i]={...arr[i],...data}; LS.set(coll,arr); }
   },
+  // Cria OU atualiza um documento com id fixo (usado pelas famílias/convites)
+  async set(coll, id, data){
+    data = { ...data, updatedAt: Date.now() };
+    if (DB.mode==='firebase'){ await DB.fs.setDoc(DB.fs.doc(DB.db,coll,id), data, {merge:true}); return; }
+    const arr = LS.get(coll,[]); const i = arr.findIndex(x=>x.id===id);
+    if (i>=0) arr[i] = {...arr[i], ...data}; else arr.push({id, ...data});
+    LS.set(coll,arr);
+  },
   async remove(coll, id){
     if (DB.mode==='firebase'){ await DB.fs.deleteDoc(DB.fs.doc(DB.db,coll,id)); return; }
     LS.set(coll, LS.get(coll,[]).filter(x=>x.id!==id));
@@ -913,7 +998,7 @@ const Store = {
 };
 
 // ---------- Estado global ----------
-const State = { config:{...DEFAULT_CONFIG}, guests:[], tasks:[], expenses:[], recados:[], unsubs:[] };
+const State = { config:{...DEFAULT_CONFIG}, guests:[], invited:[], tasks:[], expenses:[], recados:[], unsubs:[] };
 
 // ---------- App (navegação) ----------
 const App = {
@@ -993,102 +1078,92 @@ function startCountdown(){
 
 // ---------- RSVP (fluxo do convidado) ----------
 const RSVP = {
-  data:{ name:'', attending:null, companions:[], phone:'', message:'', matchId:null, match:null },
+  data:{ query:'', family:null, membros:[] },
+  matches:[],
   open(){
-    this.data = { name:'', attending:null, companions:[], phone:'', message:'', matchId:null, match:null };
+    this.data = { query:'', family:null, membros:[] };
     $('rsvp-overlay').classList.remove('hidden');
     this.show('rsvp-step-name');
-    $('rsvp-name').value=''; $('rsvp-match').classList.add('hidden'); $('rsvp-name-err').classList.add('hidden');
+    $('rsvp-name').value='';
+    $('rsvp-name-err').textContent = 'Por favor, digite seu nome.';
+    $('rsvp-name-err').classList.add('hidden');
     setTimeout(()=>$('rsvp-name').focus(),100);
   },
   close(){ $('rsvp-overlay').classList.add('hidden'); },
-  show(id){ ['rsvp-step-name','rsvp-step-existing','rsvp-step-confirm','rsvp-step-done'].forEach(s=>$(s).classList.add('hidden')); $(id).classList.remove('hidden'); },
+  show(id){ ['rsvp-step-name','rsvp-step-pick','rsvp-step-family','rsvp-step-done'].forEach(s=>$(s)&&$(s).classList.add('hidden')); $(id)?.classList.remove('hidden'); },
   async stepName(){
     const name = $('rsvp-name').value.trim();
-    if (name.length < 3 || !name.includes(' ')){ $('rsvp-name-err').classList.remove('hidden'); return; }
-    $('rsvp-name-err').classList.add('hidden');
-    this.data.name = name;
-    // procura convite pré-cadastrado ou confirmação anterior
-    const all = await Store.list('guests');
-    const n = norm(name);
-    const match = all.find(g => norm(g.name)===n) || all.find(g => norm(g.name).includes(n) || n.includes(norm(g.name)));
-    if (match){
-      this.data.matchId = match.id;
-      this.data.match = match;
-      this.data.name = match.name;
-      if (match.companions?.length) this.data.companions = [...match.companions];
-      if (match.phone) this.data.phone = match.phone;
-      // Já respondeu antes? Mostra os dados registrados e oferece edição
-      if (match.status && match.status!=='pendente'){
-        const comps = (match.companions||[]).length ? (match.companions||[]).map(esc).join(', ') : 'Nenhum';
-        $('ex-info').innerHTML = `
-          <div><span class="lbl">Nome:</span> ${esc(match.name)}</div>
-          <div><span class="lbl">Presença:</span> ${match.status==='confirmado' ? '🥂 Confirmada' : '😢 Não poderá ir'}</div>
-          <div><span class="lbl">Acompanhantes:</span> ${comps}</div>
-          ${match.phone ? `<div><span class="lbl">Telefone:</span> ${esc(match.phone)}</div>` : ''}
-          ${match.message ? `<div><span class="lbl">Recado:</span> “${esc(match.message)}”</div>` : ''}`;
-        this.show('rsvp-step-existing');
-        return;
-      }
-      $('rsvp-match').innerHTML = `<div class="match-card">✨ Encontramos seu convite, <strong>${esc(match.name)}</strong>!</div>`;
-      $('rsvp-match').classList.remove('hidden');
+    const qTokens = nameTokens(name);
+    if (name.length < 2 || !qTokens.length){
+      $('rsvp-name-err').textContent = 'Por favor, digite seu nome.';
+      $('rsvp-name-err').classList.remove('hidden'); return;
     }
-    this.openConfirmStep(null);
+    $('rsvp-name-err').classList.add('hidden');
+    this.data.query = name;
+    const invited = mergedInvited(await Store.list('guests'));
+    // famílias em que o nome digitado bate com um membro (ou com o nome da família)
+    const matches = invited.filter(f =>
+      nameHit(f.familia, qTokens) || (f.membros||[]).some(m => nameHit(m.nome, qTokens))
+    );
+    if (!matches.length){
+      $('rsvp-name-err').textContent = `Não encontramos "${name}" na lista. Confira se escreveu o nome como no convite — ou fale com os noivos. 💛`;
+      $('rsvp-name-err').classList.remove('hidden');
+      return;
+    }
+    if (matches.length === 1){ this.openFamily(matches[0]); return; }
+    this.matches = matches;
+    $('rsvp-pick-list').innerHTML = matches.map((f,i) => `
+      <button class="btn btn-outline" style="width:100%;margin-bottom:.6rem;text-align:left;justify-content:flex-start" onclick="RSVP.pick(${i})">
+        <span><strong>${esc(f.familia)}</strong> <span style="color:var(--text-soft);font-weight:400">— ${esc((f.membros||[]).map(m=>m.nome).slice(0,3).join(', '))}${(f.membros||[]).length>3?'…':''}</span></span>
+      </button>`).join('');
+    this.show('rsvp-step-pick');
   },
-  // Abre o passo de confirmação; se attending vier preenchido, pré-seleciona (modo edição)
-  openConfirmStep(attending, message){
-    $('rsvp-greet').textContent = `Olá, ${this.data.name.split(' ')[0]}! 💛`;
-    this.data.attending = null;
-    $('choice-yes').classList.remove('sel-yes'); $('choice-no').classList.remove('sel-no');
-    $('rsvp-extra').classList.add('hidden'); $('rsvp-submit').disabled = true;
-    $('rsvp-submit').textContent = 'Enviar confirmação';
-    $('rsvp-phone').value = this.data.phone || '';
-    $('rsvp-message').value = message || '';
-    this.renderComps();
-    this.show('rsvp-step-confirm');
-    if (attending !== null && attending !== undefined) this.setAttending(attending);
-  },
-  // Edição de uma resposta já registrada
-  edit(){
-    const m = this.data.match;
-    this.openConfirmStep(m ? m.status==='confirmado' : null, m?.message || '');
-  },
-  setAttending(v){
-    this.data.attending = v;
-    $('choice-yes').classList.toggle('sel-yes', v);
-    $('choice-no').classList.toggle('sel-no', !v);
-    $('rsvp-extra').classList.toggle('hidden', !v);
+  pick(i){ this.openFamily(this.matches[i]); },
+  openFamily(fam){
+    this.data.family = fam;
+    // presume presença (vai=true) para quem ainda não respondeu; mantém "não vai" de quem já marcou
+    this.data.membros = (fam.membros||[]).map(m => ({ nome:m.nome, vai: m.vai===false ? false : true }));
+    const already = fam.status && fam.status!=='pendente';
+    $('rsvp-fam-greet').textContent = already ? 'Sua resposta está registrada ✨' : 'Confirme sua presença';
+    $('rsvp-fam-sub').textContent = already
+      ? 'Você pode revisar e alterar quem vai abaixo, é só reenviar.'
+      : 'Toque em cada nome para marcar quem vai e quem não vai.';
+    $('rsvp-fam-label').textContent = fam.familia;
+    $('rsvp-phone').value = fam.phone || '';
+    $('rsvp-message').value = fam.message || '';
     $('rsvp-submit').disabled = false;
-    $('rsvp-submit').textContent = v ? 'Confirmar presença 🥂' : 'Enviar resposta';
+    $('rsvp-submit').textContent = 'Enviar confirmação';
+    this.renderMembers();
+    this.show('rsvp-step-family');
   },
-  renderComps(){
-    const list = $('comp-list');
-    list.innerHTML = this.data.companions.map((c,i) =>
-      `<div class="comp-row"><input type="text" value="${esc(c)}" placeholder="Nome do acompanhante" onchange="RSVP.data.companions[${i}]=this.value">
-       <button class="comp-del" title="Remover" onclick="RSVP.delComp(${i})">×</button></div>`).join('');
+  renderMembers(){
+    $('rsvp-members').innerHTML = this.data.membros.map((m,i) => `
+      <div class="mrow">
+        <span class="mname">${esc(m.nome)}</span>
+        <div class="mtog">
+          <button class="mgo ${m.vai===true?'on':''}" onclick="RSVP.setMember(${i},true)">🥂 Vai</button>
+          <button class="mno ${m.vai===false?'on':''}" onclick="RSVP.setMember(${i},false)">😢 Não</button>
+        </div>
+      </div>`).join('');
   },
-  addComp(){ this.data.companions.push(''); this.renderComps(); const inputs=$('comp-list').querySelectorAll('input'); inputs[inputs.length-1]?.focus(); },
-  delComp(i){ this.data.companions.splice(i,1); this.renderComps(); },
+  setMember(i,v){ this.data.membros[i].vai = v; this.renderMembers(); },
   async submit(){
-    if (this.data.attending===null) return;
+    const fam = this.data.family; if (!fam) return;
     const btn = $('rsvp-submit'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span>';
     try {
-      const companions = this.data.attending ? this.data.companions.map(c=>c.trim()).filter(Boolean) : [];
+      const membros = this.data.membros.map(m => ({ nome:m.nome, vai: !!m.vai }));
+      const status = familyStatus({membros});
       const payload = {
-        name: this.data.name,
-        status: this.data.attending ? 'confirmado' : 'recusado',
-        companions,
-        phone: $('rsvp-phone').value.trim(),
-        message: $('rsvp-message').value.trim(),
-        respondedAt: Date.now(),
-        source: 'convidado'
+        familia: fam.familia, membros, group: fam.group||'',
+        phone: $('rsvp-phone').value.trim(), message: $('rsvp-message').value.trim(),
+        status, respondedAt: Date.now(), source:'convidado'
       };
-      if (this.data.matchId) await Store.update('guests', this.data.matchId, payload);
-      else await Store.add('guests', payload);
-      if (this.data.attending){
+      if (!fam.respondedAt && !fam.createdAt) payload.createdAt = Date.now();
+      await Store.set('guests', fam.id, payload);
+      const vao = membros.filter(m=>m.vai).length;
+      if (vao > 0){
         $('done-emoji').textContent='🎉'; $('done-title').textContent='Presença confirmada!';
-        const n = 1 + companions.length;
-        $('done-text').textContent = n>1 ? `Reservamos ${n} lugares para vocês. Mal podemos esperar! 💛` : 'Obrigado! Mal podemos esperar para celebrar com você. 💛';
+        $('done-text').textContent = vao>1 ? `Reservamos ${vao} lugares para vocês. Mal podemos esperar! 💛` : 'Obrigado! Mal podemos esperar para celebrar com você. 💛';
       } else {
         $('done-emoji').textContent='💛'; $('done-title').textContent='Resposta registrada';
         $('done-text').textContent='Sentiremos sua falta! Obrigado por nos avisar.';
@@ -1096,7 +1171,8 @@ const RSVP = {
       this.show('rsvp-step-done');
     } catch(e){
       console.error(e); toast('Erro ao enviar. Tente novamente.');
-    } finally { btn.disabled=false; btn.textContent='Enviar confirmação'; }
+      btn.disabled=false; btn.textContent='Enviar confirmação';
+    }
   }
 };
 
@@ -1127,7 +1203,11 @@ const Dash = {
   start(){
     if (this.started){ this.renderAll(); return; }
     this.started = true;
-    State.unsubs.push(Store.subscribe('guests', list => { State.guests = list.sort((a,b)=>(b.respondedAt||b.createdAt||0)-(a.respondedAt||a.createdAt||0)); this.renderAll(); }));
+    State.unsubs.push(Store.subscribe('guests', list => {
+      State.guests = list;
+      State.invited = mergedInvited(list).sort((a,b)=>(b.respondedAt||b.createdAt||0)-(a.respondedAt||a.createdAt||0) || a.familia.localeCompare(b.familia));
+      this.renderAll();
+    }));
     State.unsubs.push(Store.subscribe('tasks', list => { State.tasks = list.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0)); this.renderChecklist(); this.renderOverview(); }));
     State.unsubs.push(Store.subscribe('expenses', list => { State.expenses = list.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0)); this.renderBudget(); }));
     State.unsubs.push(Store.subscribe('recados', list => { State.recados = list; this.renderMessages(); }));
@@ -1144,34 +1224,34 @@ const Dash = {
     if (r) this[r]();
   },
   stats(){
-    const g = State.guests;
-    const conf = g.filter(x=>x.status==='confirmado');
-    const rec = g.filter(x=>x.status==='recusado');
-    const pend = g.filter(x=>!x.status || x.status==='pendente');
-    const pessoas = conf.reduce((s,x)=> s+1+(x.companions?.length||0), 0);
-    return {conf,rec,pend,pessoas,total:g.length};
+    const fams = State.invited;
+    const conf = fams.filter(f=>f.status==='confirmado' || f.status==='parcial'); // pelo menos 1 pessoa vai
+    const rec = fams.filter(f=>f.status==='recusado');
+    const pend = fams.filter(f=>!f.status || f.status==='pendente');
+    const pessoas = fams.reduce((s,f)=> s + (f.membros||[]).filter(m=>m.vai===true).length, 0);
+    const convidados = fams.reduce((s,f)=> s + (f.membros||[]).length, 0);
+    return {conf,rec,pend,pessoas,convidados,fams,total:fams.length};
   },
 
   // ===== VISÃO GERAL =====
   renderOverview(){
     if (this.current!=='overview') return;
     const s = this.stats();
-    const c = State.config;
     const answered = s.conf.length + s.rec.length;
     const pct = s.total ? Math.round(answered/s.total*100) : 0;
     const tasksDone = State.tasks.filter(t=>t.done).length;
-    const recent = State.guests.filter(g=>g.respondedAt).slice(0,6);
+    const recent = State.invited.filter(f=>f.respondedAt).slice(0,6);
     const R=34, C=2*Math.PI*R;
-    const totalAns = Math.max(answered + s.pend.length, 1);
+    const totalAns = Math.max(s.total, 1);
     const arc1 = s.conf.length/totalAns*C, arc2 = s.rec.length/totalAns*C;
     $('tab-overview').innerHTML = `
       <div class="stat-grid">
-        <div class="stat-card ok"><div class="stat-num">${s.conf.length}</div><div class="stat-label">Confirmados</div></div>
-        <div class="stat-card"><div class="stat-num">${s.pessoas}</div><div class="stat-label">Pessoas no total*</div></div>
-        <div class="stat-card bad"><div class="stat-num">${s.rec.length}</div><div class="stat-label">Não vão</div></div>
+        <div class="stat-card ok"><div class="stat-num">${s.conf.length}</div><div class="stat-label">Famílias confirmadas</div></div>
+        <div class="stat-card"><div class="stat-num">${s.pessoas}</div><div class="stat-label">Pessoas confirmadas</div></div>
+        <div class="stat-card bad"><div class="stat-num">${s.rec.length}</div><div class="stat-label">Famílias que não vão</div></div>
         <div class="stat-card pend"><div class="stat-num">${s.pend.length}</div><div class="stat-label">Aguardando</div></div>
       </div>
-      <p style="font-size:.75rem;color:var(--text-soft);margin:-0.8rem 0 1.2rem">* incluindo acompanhantes dos convidados confirmados</p>
+      <p style="font-size:.75rem;color:var(--text-soft);margin:-0.8rem 0 1.2rem">${s.total} convites (famílias) · ${s.convidados} pessoas convidadas · ${s.pessoas} confirmaram presença</p>
       <div class="panel">
         <h3>📈 Andamento das confirmações</h3>
         <div class="chart-row">
@@ -1182,7 +1262,7 @@ const Dash = {
             <text x="50" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#31433a">${pct}%</text>
           </svg>
           <div class="legend">
-            <div><span class="dot" style="background:#5a8a63"></span>Confirmados: <strong>${s.conf.length}</strong></div>
+            <div><span class="dot" style="background:#5a8a63"></span>Confirmadas: <strong>${s.conf.length}</strong></div>
             <div><span class="dot" style="background:#b05555"></span>Não vão: <strong>${s.rec.length}</strong></div>
             <div><span class="dot" style="background:#e0d3ae"></span>Aguardando resposta: <strong>${s.pend.length}</strong></div>
             <div style="margin-top:.4rem;color:var(--text-soft)">${s.total} convites no total</div>
@@ -1196,31 +1276,34 @@ const Dash = {
       </div>
       <div class="panel">
         <h3>🕐 Últimas respostas</h3>
-        ${recent.length ? recent.map(g=>`
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:.55rem 0;border-bottom:1px solid #f0ebe0;font-size:.92rem">
-            <span><strong>${esc(g.name)}</strong>${g.companions?.length?` <span style="color:var(--text-soft)">+${g.companions.length}</span>`:''}</span>
-            <span class="badge ${g.status}">${g.status==='confirmado'?'✓ Confirmou':'✗ Não vai'}</span>
-          </div>`).join('') : `<div class="empty"><span class="em">💌</span>Nenhuma resposta ainda.<br>Copie o link do site e envie aos convidados!</div>`}
+        ${recent.length ? recent.map(f=>{
+          const vao = (f.membros||[]).filter(m=>m.vai===true).length;
+          return `<div style="display:flex;justify-content:space-between;align-items:center;padding:.55rem 0;border-bottom:1px solid #f0ebe0;font-size:.92rem">
+            <span><strong>${esc(f.familia)}</strong> <span style="color:var(--text-soft)">${vao} de ${(f.membros||[]).length} vão</span></span>
+            <span class="badge ${f.status}">${this.statusLabel(f.status)}</span>
+          </div>`;}).join('') : `<div class="empty"><span class="em">💌</span>Nenhuma resposta ainda.<br>Copie o link do site e envie aos convidados!</div>`}
       </div>`;
   },
+  statusLabel(st){ return {confirmado:'✓ Confirmada', recusado:'✗ Não vai', parcial:'◐ Parcial'}[st] || 'Aguardando'; },
 
-  // ===== CONVIDADOS =====
+  // ===== CONVIDADOS (FAMÍLIAS) =====
   renderGuests(){
     if (this.current!=='guests') return;
     const f = this.filter;
-    let list = State.guests;
-    if (f.q) list = list.filter(g => norm(g.name).includes(norm(f.q)) || (g.companions||[]).some(c=>norm(c).includes(norm(f.q))));
+    let list = State.invited.slice();
+    if (f.q) list = list.filter(g => norm(g.familia).includes(norm(f.q)) || (g.membros||[]).some(m=>norm(m.nome).includes(norm(f.q))));
     if (f.status) list = list.filter(g => (g.status||'pendente')===f.status);
     if (f.group) list = list.filter(g => (g.group||'')===f.group);
     const s = this.stats();
     $('tab-guests').innerHTML = `
       <div class="panel">
-        <h3>👥 Lista de Convidados <span style="font-size:.85rem;color:var(--text-soft);font-weight:400">(${s.total} convites · ${s.pessoas} pessoas confirmadas)</span></h3>
+        <h3>👥 Convidados <span style="font-size:.85rem;color:var(--text-soft);font-weight:400">(${s.total} convites · ${s.convidados} pessoas · ${s.pessoas} confirmadas)</span></h3>
         <div class="toolbar">
-          <input type="search" placeholder="🔍 Buscar por nome..." value="${esc(f.q)}" oninput="Dash.filter.q=this.value;Dash.renderGuests()">
+          <input type="search" placeholder="🔍 Buscar por família ou pessoa..." value="${esc(f.q)}" oninput="Dash.filter.q=this.value;Dash.renderGuests()">
           <select onchange="Dash.filter.status=this.value;Dash.renderGuests()">
             <option value="">Todos os status</option>
-            <option value="confirmado" ${f.status==='confirmado'?'selected':''}>Confirmados</option>
+            <option value="confirmado" ${f.status==='confirmado'?'selected':''}>Confirmadas (todos vão)</option>
+            <option value="parcial" ${f.status==='parcial'?'selected':''}>Parciais</option>
             <option value="recusado" ${f.status==='recusado'?'selected':''}>Não vão</option>
             <option value="pendente" ${f.status==='pendente'?'selected':''}>Aguardando</option>
           </select>
@@ -1228,72 +1311,96 @@ const Dash = {
             <option value="">Todos os grupos</option>
             ${['Família da noiva','Família do noivo','Amigos','Trabalho','Outros'].map(g=>`<option ${f.group===g?'selected':''}>${g}</option>`).join('')}
           </select>
-          <button class="btn btn-gold btn-sm" onclick="Dash.guestModal()">+ Adicionar</button>
+          <button class="btn btn-gold btn-sm" onclick="Dash.guestModal()">+ Adicionar família</button>
           <button class="btn btn-outline btn-sm" onclick="Dash.exportCSV()">⬇ Exportar CSV</button>
         </div>
         ${list.length ? `<div style="overflow-x:auto"><table class="g-table">
-          <thead><tr><th>Nome</th><th>Acompanhantes</th><th>Telefone</th><th>Grupo</th><th>Status</th><th></th></tr></thead>
-          <tbody>${list.map(g=>`
-            <tr>
-              <td><strong>${esc(g.name)}</strong>${g.source==='convidado'?' <span title="Confirmou pelo site" style="font-size:.75rem">🌐</span>':''}</td>
-              <td>${(g.companions||[]).map(esc).join(', ')||'—'}</td>
+          <thead><tr><th>Família / convite</th><th>Pessoas</th><th>Vão</th><th>Telefone</th><th>Grupo</th><th>Status</th><th></th></tr></thead>
+          <tbody>${list.map(g=>{
+            const vao = (g.membros||[]).filter(m=>m.vai===true).length;
+            return `<tr>
+              <td><strong>${esc(g.familia)}</strong>${g.source==='convidado'?' <span title="Confirmou pelo site" style="font-size:.75rem">🌐</span>':''}</td>
+              <td>${(g.membros||[]).map(m=>`<span class="mb ${m.vai===true?'y':m.vai===false?'n':''}">${esc(m.nome)}</span>`).join('')||'—'}</td>
+              <td style="white-space:nowrap"><strong>${vao}</strong> / ${(g.membros||[]).length}</td>
               <td>${esc(g.phone)||'—'}</td>
               <td>${esc(g.group)||'—'}</td>
-              <td><span class="badge ${g.status||'pendente'}">${{confirmado:'Confirmado',recusado:'Não vai'}[g.status]||'Aguardando'}</span></td>
+              <td><span class="badge ${g.status||'pendente'}">${this.statusLabel(g.status)}</span></td>
               <td style="white-space:nowrap;text-align:right">
                 <button class="icon-btn" title="Editar" onclick="Dash.guestModal('${g.id}')">✏️</button>
                 <button class="icon-btn" title="Excluir" onclick="Dash.delGuest('${g.id}')">🗑️</button>
               </td>
-            </tr>`).join('')}</tbody></table></div>`
-        : `<div class="empty"><span class="em">🕊️</span>Nenhum convidado encontrado.<br>Adicione convidados ou aguarde as confirmações pelo site.</div>`}
+            </tr>`;}).join('')}</tbody></table></div>`
+        : `<div class="empty"><span class="em">🕊️</span>Nenhuma família encontrada.<br>Adicione um convite ou aguarde as confirmações pelo site.</div>`}
       </div>`;
   },
   guestModal(id){
-    const g = id ? State.guests.find(x=>x.id===id) : {name:'',phone:'',group:'',status:'pendente',companions:[],notes:''};
+    const g = id ? State.invited.find(x=>x.id===id) : {id:'',familia:'',phone:'',group:'',membros:[{nome:'',vai:null}],notes:''};
     if (!g) return;
+    this._editMembros = (g.membros && g.membros.length ? g.membros.map(m=>({nome:m.nome, vai:m.vai})) : [{nome:'',vai:null}]);
     this.modal(`
-      <h3>${id?'Editar convidado':'Adicionar convidado'}</h3>
+      <h3>${id?'Editar família / convite':'Adicionar família / convite'}</h3>
       <div class="form-grid">
-        <div class="field full"><label>Nome completo *</label><input id="gm-name" value="${esc(g.name)}"></div>
+        <div class="field full"><label>Nome da família / convite *</label><input id="gm-familia" value="${esc(g.familia)}" placeholder="Ex.: Família Silva"></div>
         <div class="field"><label>Telefone</label><input id="gm-phone" value="${esc(g.phone)}"></div>
         <div class="field"><label>Grupo</label><select id="gm-group">
           <option value="">—</option>
           ${['Família da noiva','Família do noivo','Amigos','Trabalho','Outros'].map(x=>`<option ${g.group===x?'selected':''}>${x}</option>`).join('')}
         </select></div>
-        <div class="field full"><label>Status</label><select id="gm-status">
-          <option value="pendente" ${(!g.status||g.status==='pendente')?'selected':''}>Aguardando resposta</option>
-          <option value="confirmado" ${g.status==='confirmado'?'selected':''}>Confirmado</option>
-          <option value="recusado" ${g.status==='recusado'?'selected':''}>Não vai</option>
-        </select></div>
-        <div class="field full"><label>Acompanhantes (um por linha)</label><textarea id="gm-comps" placeholder="Nome de cada acompanhante em uma linha">${esc((g.companions||[]).join('\n'))}</textarea></div>
+        <div class="field full"><label>Pessoas do convite (marque quem já confirmou, se quiser)</label>
+          <div id="gm-members"></div>
+          <button class="add-comp" onclick="Dash.addMember()">+ Adicionar pessoa</button>
+        </div>
         <div class="field full"><label>Observações</label><input id="gm-notes" value="${esc(g.notes||'')}" placeholder="Ex.: alergia alimentar, criança, etc."></div>
       </div>
       <button class="btn btn-gold" style="width:100%" onclick="Dash.saveGuest('${id||''}')">Salvar</button>`);
+    this.renderMembersEditor();
   },
+  renderMembersEditor(){
+    const box = $('gm-members'); if (!box) return;
+    box.innerHTML = this._editMembros.map((m,i)=>`
+      <div class="comp-row">
+        <input type="text" value="${esc(m.nome)}" placeholder="Nome da pessoa" oninput="Dash._editMembros[${i}].nome=this.value">
+        <select onchange="Dash._editMembros[${i}].vai=(this.value===''?null:this.value==='sim')" style="max-width:135px;padding:.55rem .6rem;border:1.5px solid #e5ddcf;border-radius:10px;background:var(--ivory)">
+          <option value="" ${m.vai==null?'selected':''}>Aguardando</option>
+          <option value="sim" ${m.vai===true?'selected':''}>Vai</option>
+          <option value="nao" ${m.vai===false?'selected':''}>Não vai</option>
+        </select>
+        <button class="comp-del" title="Remover" onclick="Dash.delMember(${i})">×</button>
+      </div>`).join('');
+  },
+  addMember(){ this._editMembros.push({nome:'',vai:null}); this.renderMembersEditor(); },
+  delMember(i){ this._editMembros.splice(i,1); if(!this._editMembros.length) this._editMembros.push({nome:'',vai:null}); this.renderMembersEditor(); },
   async saveGuest(id){
-    const name = $('gm-name').value.trim();
-    if (!name){ toast('Digite o nome do convidado.'); return; }
+    const familia = $('gm-familia').value.trim();
+    if (!familia){ toast('Digite o nome da família / convite.'); return; }
+    const membros = this._editMembros
+      .map(m=>({nome:(m.nome||'').trim(), vai: m.vai===true?true:(m.vai===false?false:null)}))
+      .filter(m=>m.nome);
+    if (!membros.length){ toast('Adicione pelo menos uma pessoa.'); return; }
     const data = {
-      name, phone:$('gm-phone').value.trim(), group:$('gm-group').value,
-      status:$('gm-status').value, notes:$('gm-notes').value.trim(),
-      companions: $('gm-comps').value.split('\n').map(s=>s.trim()).filter(Boolean)
+      familia, group:$('gm-group').value, phone:$('gm-phone').value.trim(),
+      notes:$('gm-notes').value.trim(), membros, status:familyStatus({membros})
     };
-    if (id) await Store.update('guests', id, data);
-    else await Store.add('guests', {...data, source:'organizador'});
-    this.closeModal(); toast('Convidado salvo! ✓');
+    const useId = id || ('fam-' + uid());
+    if (!id){ data.createdAt = Date.now(); data.source = 'organizador'; }
+    await Store.set('guests', useId, data);
+    this.closeModal(); toast('Convite salvo! ✓');
   },
   async delGuest(id){
-    const g = State.guests.find(x=>x.id===id);
-    if (!confirm(`Excluir "${g?.name}" da lista?`)) return;
-    await Store.remove('guests', id); toast('Convidado excluído.');
+    const g = State.invited.find(x=>x.id===id);
+    if (!g) return;
+    if (!confirm(`Excluir "${g.familia}" da lista?`)) return;
+    if (g.seed) await Store.set('guests', id, {hidden:true, familia:g.familia}); // veio de familias.js: marca como oculto
+    else await Store.remove('guests', id);
+    toast('Convite excluído.');
   },
   exportCSV(){
-    const rows = [['Nome','Status','Acompanhantes','Qtd. pessoas','Telefone','Grupo','Recado','Observações']];
-    State.guests.forEach(g => rows.push([
-      g.name, {confirmado:'Confirmado',recusado:'Não vai'}[g.status]||'Aguardando',
-      (g.companions||[]).join('; '), g.status==='confirmado'?1+(g.companions?.length||0):0,
-      g.phone||'', g.group||'', g.message||'', g.notes||''
-    ]));
+    const rows = [['Família','Pessoa','Status','Telefone','Grupo','Recado','Observações']];
+    State.invited.forEach(f => (f.membros||[]).forEach(m => rows.push([
+      f.familia, m.nome,
+      m.vai===true?'Vai':(m.vai===false?'Não vai':'Aguardando'),
+      f.phone||'', f.group||'', f.message||'', f.notes||''
+    ])));
     const csv = '﻿' + rows.map(r => r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(';')).join('\n');
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
@@ -1405,7 +1512,7 @@ const Dash = {
   // ===== RECADOS =====
   renderMessages(){
     if (this.current!=='messages') return;
-    const fromRsvp = State.guests.filter(g=>g.message).map(g=>({name:g.name, message:g.message, time:g.respondedAt||g.createdAt||0, type:'rsvp', status:g.status}));
+    const fromRsvp = State.invited.filter(g=>g.message).map(g=>({name:g.familia, message:g.message, time:g.respondedAt||g.createdAt||0, type:'rsvp', status:g.status}));
     const fromMural = (State.recados||[]).map(r=>({name:r.name, message:r.message, time:r.createdAt||0, type:'mural', id:r.id}));
     const msgs = [...fromRsvp, ...fromMural].sort((a,b)=>b.time-a.time);
     $('tab-messages').innerHTML = `
@@ -1415,7 +1522,7 @@ const Dash = {
           <div class="recado">
             <div class="who" style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap">${esc(m.name)}
               ${m.type==='rsvp'
-                ? `<span class="badge ${m.status}">${m.status==='confirmado'?'vai':'não vai'}</span>`
+                ? `<span class="badge ${m.status}">${m.status==='recusado'?'não vai':(m.status==='parcial'?'parcial':'vai')}</span>`
                 : `<span class="badge pendente">💌 mural</span>`}
               ${m.type==='mural' ? `<button class="icon-btn" title="Excluir recado" style="margin-left:auto" onclick="Dash.delRecado('${m.id}')">🗑️</button>` : ''}
             </div>
