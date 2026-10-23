@@ -78,6 +78,70 @@ window.FAMILIAS = [
       'Suzane',    // esposa
       'Analice'    // filha
     ]
+  },
+
+  {
+    familia: 'Rafaela e Ruan',
+    membros: [
+      'Rafaela',
+      'Ruan'
+    ]
+  },
+
+  {
+    familia: 'Giovanna',
+    membros: [
+      'Giovanna'
+    ]
+  },
+
+  {
+    familia: 'Beatriz e Guilherme',
+    membros: [
+      'Beatriz',
+      'Guilherme'
+    ]
+  },
+
+  {
+    familia: 'Silvia e Antônio',
+    membros: [
+      'Silvia',
+      'Antônio'
+    ]
+  },
+
+  {
+    familia: 'Paulo e Joana',
+    membros: [
+      'Paulo',
+      'Joana'
+    ]
+  },
+
+  {
+    familia: 'Renato',
+    membros: [
+      'Renato'
+    ]
+  },
+
+  {
+    familia: 'Irmão Sérgio',
+    membros: [
+      'Irmão Sérgio',
+      'Irmã Martha',
+      'Gustavo',
+      'Katiane'
+    ]
+  },
+
+  {
+    familia: 'Renata e Rodrigo',
+    membros: [
+      'Renata',
+      'Rodrigo'
+    ]
   }
 
 ];

@@ -878,11 +878,20 @@ function normGuest(g){
 }
 
 // Busca tolerante: sem acento, sem caso, aceita primeiro nome e digitação parcial
-const NAME_STOP = new Set(['tio','tia','sr','sra','dona','familia','vovo','vovoo']);
-function nameTokens(s){ return norm(s).split(' ').filter(w => w.length >= 2 && !NAME_STOP.has(w)); }
-function nameHit(nameStr, qTokens){
-  const nw = nameTokens(nameStr);
-  return qTokens.some(q => nw.some(w => w===q || w.startsWith(q) || q.startsWith(w)));
+const NAME_STOP = new Set(['tio','tia','irmao','irma','sr','sra','dona','familia','vovo','vovoo']);
+// Variações de grafia: Giovanna/Giovana, Martha/Marta, Raphaela/Rafaela, Thaís/Taís, Suzane/Susane, Katiane/Catiane...
+const looseName = (w) => w.replace(/ph/g,'f').replace(/th/g,'t').replace(/y/g,'i').replace(/h/g,'')
+  .replace(/z/g,'s').replace(/k/g,'c').replace(/(.)\1+/g,'$1');
+function nameTokens(s){
+  return norm(s).split(' ').filter(w => w.length >= 2 && !NAME_STOP.has(w)).map(looseName).filter(w => w.length >= 2);
+}
+// Pontua a família: cada termo digitado vale 2 se bate exato com um nome, 1 se só o começo bate
+function familyScore(f, qTokens){
+  const words = [f.familia, ...(f.membros||[]).map(m => m.nome)].flatMap(nameTokens);
+  return qTokens.reduce((total, q) => {
+    if (words.includes(q)) return total + 2;
+    return total + (words.some(w => w.startsWith(q) || q.startsWith(w)) ? 1 : 0);
+  }, 0);
 }
 
 // Status da família a partir dos membros
@@ -1101,16 +1110,16 @@ const RSVP = {
     $('rsvp-name-err').classList.add('hidden');
     this.data.query = name;
     const invited = mergedInvited(await Store.list('guests'));
-    // famílias em que o nome digitado bate com um membro (ou com o nome da família)
-    const matches = invited.filter(f =>
-      nameHit(f.familia, qTokens) || (f.membros||[]).some(m => nameHit(m.nome, qTokens))
-    );
+    // famílias em que o nome digitado bate com um membro (ou com o nome da família), melhores primeiro
+    const scored = invited.map(f => ({ f, s: familyScore(f, qTokens) })).filter(x => x.s > 0).sort((a,b) => b.s - a.s);
+    const matches = scored.map(x => x.f);
     if (!matches.length){
       $('rsvp-name-err').textContent = `Não encontramos "${name}" na lista. Confira se escreveu o nome como no convite — ou fale com os noivos. 💛`;
       $('rsvp-name-err').classList.remove('hidden');
       return;
     }
-    if (matches.length === 1){ this.openFamily(matches[0]); return; }
+    // uma família ganha sozinha -> entra direto; empate -> tela de escolha
+    if (scored.length === 1 || scored[0].s > scored[1].s){ this.openFamily(matches[0]); return; }
     this.matches = matches;
     $('rsvp-pick-list').innerHTML = matches.map((f,i) => `
       <button class="btn btn-outline" style="width:100%;margin-bottom:.6rem;text-align:left;justify-content:flex-start" onclick="RSVP.pick(${i})">
