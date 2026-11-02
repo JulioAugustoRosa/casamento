@@ -285,11 +285,12 @@ body.menu-open #menu a{opacity:1;transform:none}
 .pad-note{max-width:640px;margin:0 auto 3rem;text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.05rem,4.2vw,1.35rem);color:rgba(255,255,255,.85);line-height:1.9}
 .pad-grid{display:grid;grid-template-columns:1fr;gap:.9rem;margin-bottom:3rem}
 @media(min-width:620px){.pad-grid{grid-template-columns:1fr 1fr}}
-@media(min-width:980px){.pad-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:980px){.pad-grid{grid-template-columns:repeat(3,1fr)}.pad-grid.par{grid-template-columns:1fr 1fr;max-width:760px;margin-left:auto;margin-right:auto}}
 .pad-pair{background:rgba(255,255,255,.045);border:1px solid rgba(233,217,182,.16);padding:1.5rem 1.2rem;text-align:center;transition:background .45s,border-color .45s,transform .5s var(--ease-out)}
 .pad-pair:hover{background:rgba(255,255,255,.09);border-color:rgba(233,217,182,.35);transform:translateY(-4px)}
 .pad-pair .nm{font-family:'Cormorant Garamond',serif;font-size:1.22rem;color:#fff;line-height:1.5}
-.pad-pair .amp{color:var(--gold-2);font-style:italic;padding:0 .35rem}
+.pad-pair .amp{display:block;color:var(--gold-2);font-style:italic;line-height:1.2;margin:.15rem 0}
+.pad-pair .pn{display:block;text-wrap:balance}
 .pad-pair .rel{font-size:.63rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(233,217,182,.6);margin-top:.6rem}
 .pad-info{display:grid;grid-template-columns:1fr;gap:.9rem}
 @media(min-width:620px){.pad-info{grid-template-columns:1fr 1fr}}
@@ -1808,9 +1809,9 @@ const Landing = {
     const casais = p.casais || [], avisos = p.avisos || [];
     $('pad-content').innerHTML = `
       ${p.recado ? `<p class="pad-note" data-rv="blur">${esc(p.recado)}</p>` : ''}
-      ${casais.length ? `<div class="pad-grid">${casais.map((c,i)=>`
+      ${casais.length ? `<div class="pad-grid${casais.length%2===0 && casais.length%3!==0 ? ' par' : ''}">${casais.map((c,i)=>`
         <div class="pad-pair" data-rv="up" style="--d:${(i%3)*.08}s">
-          <div class="nm">${esc(c.madrinha||'')}${c.madrinha&&c.padrinho?'<span class="amp">&</span>':''}${esc(c.padrinho||'')}</div>
+          <div class="nm">${[c.padrinho, c.madrinha].filter(Boolean).map(n => `<span class="pn">${esc(n)}</span>`).join('<span class="amp">&</span>')}</div>
           ${c.relacao ? `<div class="rel">${esc(c.relacao)}</div>` : ''}
         </div>`).join('')}</div>` : ''}
       ${avisos.length ? `<div class="pad-info">${avisos.map((a,i)=>`

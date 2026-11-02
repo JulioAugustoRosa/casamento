@@ -81,13 +81,12 @@ window.SITE = {
     recado: 'Vocês são as pessoas que caminharam com a gente até aqui. Ter cada um de vocês ao nosso lado no altar é um presente — obrigado por dizerem sim junto com a gente. 💛',
 
     // Lista dos padrinhos e madrinhas (edite à vontade)
+    // "relacao" é opcional: aparece pequeno embaixo dos nomes (ex.: 'Irmão do noivo'). Vazio = não aparece.
     casais: [
-      { madrinha: 'Ana Clara',  padrinho: 'Rafael',   relacao: 'Irmã da noiva & cunhado' },
-      { madrinha: 'Beatriz',    padrinho: 'Lucas',    relacao: 'Amigos de infância' },
-      { madrinha: 'Camila',     padrinho: 'Thiago',   relacao: 'Amigos da faculdade' },
-      { madrinha: 'Larissa',    padrinho: 'Gabriel',  relacao: 'Primos do noivo' },
-      { madrinha: 'Mariana',    padrinho: 'Pedro',    relacao: 'Amigos da igreja' },
-      { madrinha: 'Sofia',      padrinho: 'Matheus',  relacao: 'Amigos de sempre' }
+      { padrinho: 'José Tadeu Rosa Júnior', madrinha: 'Keila Mendes Rodrigues Rosa', relacao: '' },
+      { padrinho: 'Jean Robson Rosa',       madrinha: 'Laiciane Mello Rosa',         relacao: '' },
+      { padrinho: 'Moisés Revoredo',        madrinha: 'Monalisa Sanches',            relacao: '' },
+      { padrinho: 'Daniel Carvalho',        madrinha: 'Franciele Colhado Batista',   relacao: '' }
     ],
 
     // Informações práticas (cards)
