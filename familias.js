@@ -146,6 +146,37 @@ window.FAMILIAS = [
       'Renata',
       'Rodrigo'
     ]
+  },
+
+  {
+    familia: 'Mayara e Gabriel',
+    membros: [
+      'Mayara',
+      'Gabriel'
+    ]
+  },
+
+  {
+    familia: 'Priscila e Adilson',
+    membros: [
+      'Priscila',
+      'Adilson'
+    ]
+  },
+
+  {
+    familia: 'Lúcia e Samuel',
+    membros: [
+      'Lúcia',
+      'Samuel'
+    ]
+  },
+
+  {
+    familia: 'Cristiane',
+    membros: [
+      'Cristiane'
+    ]
   }
 
 ];
