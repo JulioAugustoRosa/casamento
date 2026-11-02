@@ -739,6 +739,7 @@ button,.btn,.tab,.icon-btn,a{touch-action:manipulation}
       <h3>Qual é o seu convite?</h3>
       <p class="sub">Encontramos mais de um convite com esse nome. Toque no seu:</p>
       <div class="pick-list" id="rsvp-pick-list"></div>
+      <button class="btn btn-outline" style="width:100%;margin-top:.2rem" onclick="RSVP.openNew()">Não estou em nenhum desses</button>
       <button class="btn btn-ghost" style="width:100%;margin-top:.4rem" onclick="RSVP.show('rsvp-step-name')">← Voltar</button>
     </div>
 
@@ -756,7 +757,38 @@ button,.btn,.tab,.icon-btn,a{touch-action:manipulation}
         <textarea id="rsvp-message" placeholder="Deixe uma mensagem carinhosa..."></textarea>
       </div>
       <button class="btn btn-gold" style="width:100%" id="rsvp-submit" onclick="RSVP.submit()">Enviar confirmação</button>
-      <button class="btn btn-ghost" style="width:100%;margin-top:.4rem" onclick="RSVP.show('rsvp-step-name')">← Não é você? Voltar</button>
+      <button class="btn btn-ghost" style="width:100%;margin-top:.4rem" onclick="RSVP.openNew()">Não é a sua família? Confirmar com seu nome</button>
+    </div>
+
+    <div id="rsvp-step-new" class="hidden">
+      <h3>Confirme sua presença</h3>
+      <p class="sub" id="rsvp-new-sub">Preencha seus dados abaixo. 💛</p>
+      <div class="field">
+        <label>Seu nome completo</label>
+        <input type="text" id="rsvp-new-name" placeholder="Ex.: Maria da Silva" autocomplete="name">
+        <div class="error-txt hidden" id="rsvp-new-err">Por favor, digite seu nome e sobrenome.</div>
+      </div>
+      <div class="choice-row">
+        <button class="choice" id="rsvp-new-yes" onclick="RSVP.setNewAttending(true)"><span class="em">🥂</span><span>Sim, estarei lá!</span></button>
+        <button class="choice" id="rsvp-new-no" onclick="RSVP.setNewAttending(false)"><span class="em">😢</span><span>Não poderei ir</span></button>
+      </div>
+      <div id="rsvp-new-extra" class="hidden">
+        <div class="field">
+          <label>Acompanhantes <span style="text-transform:none;font-weight:400">(se houver)</span></label>
+          <div id="rsvp-new-comps"></div>
+          <button class="add-comp" onclick="RSVP.addComp()">+ Adicionar acompanhante</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Telefone / WhatsApp <span style="text-transform:none;font-weight:400">(opcional)</span></label>
+        <input type="tel" id="rsvp-new-phone" placeholder="(00) 00000-0000">
+      </div>
+      <div class="field">
+        <label>Recado para os noivos <span style="text-transform:none;font-weight:400">(opcional)</span></label>
+        <textarea id="rsvp-new-message" placeholder="Deixe uma mensagem carinhosa..."></textarea>
+      </div>
+      <button class="btn btn-gold" style="width:100%" id="rsvp-new-submit" onclick="RSVP.submitNew()" disabled>Enviar confirmação</button>
+      <button class="btn btn-ghost" style="width:100%;margin-top:.4rem" onclick="RSVP.show('rsvp-step-name')">← Buscar meu nome de novo</button>
     </div>
 
     <div id="rsvp-step-done" class="hidden">
@@ -873,7 +905,7 @@ function normGuest(g){
     id:g.id, familia:g.familia || g.name || 'Convidados', membros,
     group:g.group||'', phone:g.phone||'', message:g.message||'', notes:g.notes||'',
     respondedAt:g.respondedAt||0, createdAt:g.createdAt||0, source:g.source||'',
-    hidden:!!g.hidden, status:g.status
+    hidden:!!g.hidden, foraDaLista:!!g.foraDaLista, status:g.status
   };
 }
 
@@ -1099,7 +1131,7 @@ const RSVP = {
     setTimeout(()=>$('rsvp-name').focus(),100);
   },
   close(){ $('rsvp-overlay').classList.add('hidden'); },
-  show(id){ ['rsvp-step-name','rsvp-step-pick','rsvp-step-family','rsvp-step-done'].forEach(s=>$(s)&&$(s).classList.add('hidden')); $(id)?.classList.remove('hidden'); },
+  show(id){ ['rsvp-step-name','rsvp-step-pick','rsvp-step-family','rsvp-step-new','rsvp-step-done'].forEach(s=>$(s)&&$(s).classList.add('hidden')); $(id)?.classList.remove('hidden'); },
   async stepName(){
     const name = $('rsvp-name').value.trim();
     const qTokens = nameTokens(name);
@@ -1114,8 +1146,8 @@ const RSVP = {
     const scored = invited.map(f => ({ f, s: familyScore(f, qTokens) })).filter(x => x.s > 0).sort((a,b) => b.s - a.s);
     const matches = scored.map(x => x.f);
     if (!matches.length){
-      $('rsvp-name-err').textContent = `Não encontramos "${name}" na lista. Confira se escreveu o nome como no convite — ou fale com os noivos. 💛`;
-      $('rsvp-name-err').classList.remove('hidden');
+      // confirmação aberta: quem não está na lista confirma pelo formulário
+      this.openNew('Não encontramos seu nome na nossa lista, mas tudo bem: confirme por aqui! 💛');
       return;
     }
     // uma família ganha sozinha -> entra direto; empate -> tela de escolha
@@ -1169,19 +1201,75 @@ const RSVP = {
       };
       if (!fam.respondedAt && !fam.createdAt) payload.createdAt = Date.now();
       await Store.set('guests', fam.id, payload);
-      const vao = membros.filter(m=>m.vai).length;
-      if (vao > 0){
-        $('done-emoji').textContent='🎉'; $('done-title').textContent='Presença confirmada!';
-        $('done-text').textContent = vao>1 ? `Reservamos ${vao} lugares para vocês. Mal podemos esperar! 💛` : 'Obrigado! Mal podemos esperar para celebrar com você. 💛';
-      } else {
-        $('done-emoji').textContent='💛'; $('done-title').textContent='Resposta registrada';
-        $('done-text').textContent='Sentiremos sua falta! Obrigado por nos avisar.';
-      }
-      this.show('rsvp-step-done');
+      this.showDone(membros.filter(m=>m.vai).length);
     } catch(e){
       console.error(e); toast('Erro ao enviar. Tente novamente.');
       btn.disabled=false; btn.textContent='Enviar confirmação';
     }
+  },
+  showDone(vao){
+    if (vao > 0){
+      $('done-emoji').textContent='🎉'; $('done-title').textContent='Presença confirmada!';
+      $('done-text').textContent = vao>1 ? `Reservamos ${vao} lugares para vocês. Mal podemos esperar! 💛` : 'Obrigado! Mal podemos esperar para celebrar com você. 💛';
+    } else {
+      $('done-emoji').textContent='💛'; $('done-title').textContent='Resposta registrada';
+      $('done-text').textContent='Sentiremos sua falta! Obrigado por nos avisar.';
+    }
+    this.show('rsvp-step-done');
+  },
+
+  // ----- Confirmação aberta (quem não está na lista) -----
+  openNew(sub){
+    this.data.newAttending = null;
+    this.data.comps = [];
+    $('rsvp-new-sub').textContent = sub || 'Preencha seus dados abaixo para confirmar. 💛';
+    $('rsvp-new-name').value = this.data.query || '';
+    $('rsvp-new-err').classList.add('hidden');
+    $('rsvp-new-phone').value = ''; $('rsvp-new-message').value = '';
+    $('rsvp-new-yes').classList.remove('sel-yes'); $('rsvp-new-no').classList.remove('sel-no');
+    $('rsvp-new-extra').classList.add('hidden');
+    const btn = $('rsvp-new-submit'); btn.disabled = true; btn.textContent = 'Enviar confirmação';
+    this.renderComps();
+    this.show('rsvp-step-new');
+    setTimeout(()=>$('rsvp-new-name').focus(),100);
+  },
+  setNewAttending(v){
+    this.data.newAttending = v;
+    $('rsvp-new-yes').classList.toggle('sel-yes', v);
+    $('rsvp-new-no').classList.toggle('sel-no', !v);
+    $('rsvp-new-extra').classList.toggle('hidden', !v);
+    $('rsvp-new-submit').disabled = false;
+  },
+  renderComps(){
+    $('rsvp-new-comps').innerHTML = this.data.comps.map((c,i) => `
+      <div class="comp-row"><input type="text" value="${esc(c)}" placeholder="Nome do acompanhante" oninput="RSVP.data.comps[${i}]=this.value">
+      <button class="comp-del" title="Remover" onclick="RSVP.delComp(${i})">×</button></div>`).join('');
+  },
+  addComp(){ this.data.comps.push(''); this.renderComps(); const ins = $('rsvp-new-comps').querySelectorAll('input'); ins[ins.length-1]?.focus(); },
+  delComp(i){ this.data.comps.splice(i,1); this.renderComps(); },
+  async submitNew(){
+    const name = $('rsvp-new-name').value.trim().replace(/\s+/g,' ');
+    if (name.length < 3 || !name.includes(' ')){ $('rsvp-new-err').classList.remove('hidden'); $('rsvp-new-name').focus(); return; }
+    $('rsvp-new-err').classList.add('hidden');
+    if (this.data.newAttending === null) return;
+    const btn = $('rsvp-new-submit'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span>';
+    try {
+      const invited = mergedInvited(await Store.list('guests'));
+      // já existe alguém com esse nome completo? abre a resposta dele em vez de duplicar
+      const same = invited.find(f => (f.membros||[]).some(m => norm(m.nome) === norm(name)));
+      if (same){ toast('Encontramos um convite com esse nome ✨'); this.openFamily(same); return; }
+      const vai = this.data.newAttending;
+      const comps = vai ? this.data.comps.map(c => c.trim()).filter(Boolean) : [];
+      const membros = [{nome:name, vai}, ...comps.map(c => ({nome:c, vai:true}))];
+      await Store.set('guests', 'fam-' + uid(), {
+        familia: name, membros, group:'', foraDaLista: true,
+        phone: $('rsvp-new-phone').value.trim(), message: $('rsvp-new-message').value.trim(),
+        status: familyStatus({membros}), createdAt: Date.now(), respondedAt: Date.now(), source:'convidado'
+      });
+      this.showDone(membros.filter(m=>m.vai).length);
+    } catch(e){
+      console.error(e); toast('Erro ao enviar. Tente novamente.');
+    } finally { btn.disabled = false; btn.textContent = 'Enviar confirmação'; }
   }
 };
 
@@ -1328,7 +1416,7 @@ const Dash = {
           <tbody>${list.map(g=>{
             const vao = (g.membros||[]).filter(m=>m.vai===true).length;
             return `<tr>
-              <td><strong>${esc(g.familia)}</strong>${g.source==='convidado'?' <span title="Confirmou pelo site" style="font-size:.75rem">🌐</span>':''}</td>
+              <td><strong>${esc(g.familia)}</strong>${g.source==='convidado'?' <span title="Confirmou pelo site" style="font-size:.75rem">🌐</span>':''}${g.foraDaLista?' <span class="badge parcial" title="Confirmou pelo site sem estar na lista de convidados">fora da lista</span>':''}</td>
               <td>${(g.membros||[]).map(m=>`<span class="mb ${m.vai===true?'y':m.vai===false?'n':''}">${esc(m.nome)}</span>`).join('')||'—'}</td>
               <td style="white-space:nowrap"><strong>${vao}</strong> / ${(g.membros||[]).length}</td>
               <td>${esc(g.phone)||'—'}</td>

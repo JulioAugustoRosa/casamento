@@ -5,6 +5,10 @@
    o NOME dele (pode ser só o primeiro nome), o site acha a família dele e mostra
    TODAS as pessoas do convite para marcar quem vai e quem não vai.
 
+   A confirmação é ABERTA: quem não estiver nesta lista também pode confirmar
+   (preenche nome, acompanhantes etc.). No painel essas pessoas aparecem com a
+   etiqueta "fora da lista".
+
    A busca não diferencia acento nem maiúsculas/minúsculas
    ("agata", "Ágata" e "ÁGATA" acham a mesma pessoa) e aceita nome parcial.
 
