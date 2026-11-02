@@ -173,9 +173,10 @@ window.FAMILIAS = [
   },
 
   {
-    familia: 'Cristiane',
+    familia: 'Cristiane e Pedro',
     membros: [
-      'Cristiane'
+      'Cristiane',
+      'Pedro'
     ]
   }
 
