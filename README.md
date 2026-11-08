@@ -1,6 +1,6 @@
 # 💍 Site de Casamento — Júlio & Grazielly
 
-Site de casamento completo: landing page com fotos e efeitos de rolagem, confirmação de presença (RSVP), área dos padrinhos e painel do organizador.
+Site de casamento completo: landing page com fotos e efeitos de rolagem, confirmação de presença (RSVP) e painel do organizador.
 
 ## ✨ O que o site tem
 
@@ -10,8 +10,7 @@ Site de casamento completo: landing page com fotos e efeitos de rolagem, confirm
 - **Faixas em parallax**: fotos grandes que se movem mais devagar que o conteúdo
 - **Detalhes da celebração**: data, local (com botão para o Google Maps), traje e presentes
 - **Galeria** em mosaico — clique numa foto para ampliar (arrasta o dedo para trocar de foto)
-- **Área dos padrinhos** protegida por senha
-- **Confirmar Presença**: a pessoa digita o nome, informa acompanhantes, telefone e deixa um recado — sem precisar de login. Quem já respondeu vê os dados registrados e pode editá-los (sem duplicar)
+- **Confirmar Presença**: a pessoa digita o nome; se estiver na lista (`familias.js` ou painel), vê a família inteira e marca quem vai. Quem não está na lista confirma por um formulário aberto. Sem login, e quem já respondeu pode editar (sem duplicar)
 - **Mural de recados** para deixar mensagens aos noivos, com os recados aparecendo na própria página
 
 **Para os noivos** (Área do casal, no rodapé do site):
@@ -25,7 +24,7 @@ Site de casamento completo: landing page com fotos e efeitos de rolagem, confirm
 
 ## 📸 Trocar as fotos e os textos
 
-Tudo o que é foto, história e padrinhos fica em **um único arquivo: `fotos.js`**.
+Tudo o que é foto e história fica em **um único arquivo: `fotos.js`**.
 Não é preciso mexer no `index.html`.
 
 1. Coloque a foto nova dentro da pasta **`fotos/`**
@@ -39,7 +38,6 @@ Dentro do `fotos.js` você controla:
 | Fotos grandes de fundo (parallax) | `faixas` |
 | Linha do tempo "Nossa História" (foto + data + título + texto) | `historia` |
 | Galeria (quantas fotos quiser: 3, 8, 20...) | `galeria` |
-| Padrinhos, madrinhas, trajes, horários e recado | `padrinhos` |
 
 Para **tirar** uma foto da galeria, apague a linha dela (ou coloque `//` na frente).
 Para **adicionar**, escreva mais uma linha. A galeria se ajusta sozinha.
@@ -47,12 +45,6 @@ Para **adicionar**, escreva mais uma linha. A galeria se ajusta sozinha.
 > Deixe cada foto com no máximo ~1500px de largura e ~300 KB, senão o site fica lento no celular dos convidados. As fotos que já estão na pasta foram otimizadas (formato `.webp`).
 
 A imagem `fotos/capa-link.jpg` é a **prévia que aparece ao compartilhar o link no WhatsApp**.
-
-## 🔐 Área dos padrinhos
-
-- Senha atual: **`padrinhos`** (não diferencia maiúsculas de minúsculas)
-- Para mudar a senha: gere o código SHA-256 da nova senha (por exemplo em `emn178.github.io/online-tools/sha256.html`, tudo em minúsculas) e substitua o valor de `PADRINHOS_HASH` no `index.html`
-- O conteúdo dessa área (nomes, trajes, horários) fica em `fotos.js`, dentro de `padrinhos`
 
 ## 🗄️ Banco de dados
 
@@ -83,4 +75,4 @@ Lembre-se de enviar também a pasta `fotos/` e o arquivo `fotos.js`.
 
 ## ⚠️ Nota de segurança
 
-Este é um site estático: a proteção do painel e da área dos padrinhos é uma barreira de conveniência (senha verificada no navegador) e as regras do banco são abertas para permitir RSVP sem login. Adequado para um site de casamento; não guarde dados sensíveis nele.
+Este é um site estático: a proteção do painel é uma barreira de conveniência (senha verificada no navegador) e as regras do banco são abertas para permitir RSVP sem login. Adequado para um site de casamento; não guarde dados sensíveis nele.

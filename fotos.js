@@ -2,7 +2,7 @@
    FOTOS E TEXTOS DO SITE — Júlio & Grazielly
    ----------------------------------------------------------------------------
    Este é o único arquivo que você precisa mexer para trocar as fotos e os
-   textos das seções "Nossa História", "Galeria" e "Padrinhos".
+   textos das seções "Nossa História" e "Galeria".
 
    COMO TROCAR UMA FOTO
    1. Coloque o arquivo novo dentro da pasta  fotos/
@@ -26,8 +26,7 @@ window.SITE = {
   /* ---------- FOTOS GRANDES DE FUNDO (efeito parallax) ---------- */
   faixas: {
     convite:   'fotos/foto-101.webp',  // faixa depois de "Nossa História"
-    confirmar: 'fotos/foto-099.webp',  // faixa do "Confirme sua presença"
-    padrinhos: 'fotos/foto-016.webp'   // fundo da área dos padrinhos
+    confirmar: 'fotos/foto-099.webp'   // faixa do "Confirme sua presença"
   },
 
   /* ---------- NOSSA HISTÓRIA (linha do tempo) ----------
@@ -72,32 +71,5 @@ window.SITE = {
     'fotos/foto-082.webp',
     'fotos/foto-016.webp',
     'fotos/foto-070.webp'
-  ],
-
-  /* ---------- ÁREA DOS PADRINHOS ----------
-     Área protegida por senha. A senha é: padrinhos
-     (para mudar a senha, veja a linha PADRINHOS_HASH no index.html) */
-  padrinhos: {
-    recado: 'Vocês são as pessoas que caminharam com a gente até aqui. Ter cada um de vocês ao nosso lado no altar é um presente — obrigado por dizerem sim junto com a gente. 💛',
-
-    // Lista dos padrinhos e madrinhas (edite à vontade)
-    // "relacao" é opcional: aparece pequeno embaixo dos nomes (ex.: 'Irmão do noivo'). Vazio = não aparece.
-    casais: [
-      { padrinho: 'José Tadeu Rosa Júnior', madrinha: 'Keila Mendes Rodrigues Rosa', relacao: '' },
-      { padrinho: 'Jean Robson Rosa',       madrinha: 'Laiciane Mello Rosa',         relacao: '' },
-      { padrinho: 'Moisés Revoredo',        madrinha: 'Monalisa Sanches',            relacao: '' },
-      { padrinho: 'Daniel Carvalho',        madrinha: 'Franciele Colhado Batista',   relacao: '' }
-    ],
-
-    // Informações práticas (cards)
-    avisos: [
-      { icone: '👗', titulo: 'Traje das madrinhas', texto: 'Vestido na cor rosa fúcsia.' },
-      { icone: '🤵', titulo: 'Traje dos padrinhos', texto: 'Terno cinza médio, camisa branca\ne gravata combinando com o terno.' },
-      { icone: '⏰', titulo: 'Horário de chegada', texto: 'Pedimos que estejam no local às 11h,\numa hora antes do início da cerimônia.' }
-    ],
-
-    // Link do grupo (deixe '' para esconder o botão)
-    grupoUrl: '',
-    grupoTexto: 'Entrar no grupo dos padrinhos'
-  }
+  ]
 };
