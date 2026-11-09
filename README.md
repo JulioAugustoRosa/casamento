@@ -10,7 +10,7 @@ Site de casamento completo: landing page com fotos e efeitos de rolagem, confirm
 - **Faixas em parallax**: fotos grandes que se movem mais devagar que o conteúdo
 - **Detalhes da celebração**: data, local (com botão para o Google Maps), traje e presentes
 - **Galeria** em mosaico — clique numa foto para ampliar (arrasta o dedo para trocar de foto)
-- **Confirmar Presença**: a pessoa digita o nome; se estiver na lista (`familias.js` ou painel), vê a família inteira e marca quem vai. Quem não está na lista confirma por um formulário aberto. Sem login, e quem já respondeu pode editar (sem duplicar)
+- **Confirmar Presença**: a pessoa digita o nome; se estiver na lista (`familias.js` ou painel), vê a família inteira e marca quem vai. Quem não está na lista confirma por um formulário aberto. Sem login e com telefone obrigatório. Confirmou, está registrado: o site nunca mostra nem deixa editar a resposta de ninguém, e pessoas com o mesmo nome confirmam separadamente (cada envio vira um registro novo no painel)
 - **Mural de recados** para deixar mensagens aos noivos, com os recados aparecendo na própria página
 
 **Para os noivos** (Área do casal, no rodapé do site):

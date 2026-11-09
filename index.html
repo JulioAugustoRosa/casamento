@@ -685,8 +685,9 @@ button,.btn,.tab,.icon-btn,a{touch-action:manipulation}
       <div class="fam-label" id="rsvp-fam-label"></div>
       <div class="fam-members" id="rsvp-members"></div>
       <div class="field">
-        <label>Telefone / WhatsApp <span style="text-transform:none;font-weight:400">(opcional)</span></label>
-        <input type="tel" id="rsvp-phone" placeholder="(00) 00000-0000">
+        <label>Telefone / WhatsApp <span style="text-transform:none;font-weight:400">(com DDD)</span></label>
+        <input type="tel" id="rsvp-phone" placeholder="(00) 00000-0000" autocomplete="tel" inputmode="tel">
+        <div class="error-txt hidden" id="rsvp-phone-err">Por favor, digite seu telefone com DDD. Ex.: (43) 99999-0000</div>
       </div>
       <div class="field">
         <label>Recado para os noivos <span style="text-transform:none;font-weight:400">(opcional)</span></label>
@@ -716,8 +717,9 @@ button,.btn,.tab,.icon-btn,a{touch-action:manipulation}
         </div>
       </div>
       <div class="field">
-        <label>Telefone / WhatsApp <span style="text-transform:none;font-weight:400">(opcional)</span></label>
-        <input type="tel" id="rsvp-new-phone" placeholder="(00) 00000-0000">
+        <label>Telefone / WhatsApp <span style="text-transform:none;font-weight:400">(com DDD)</span></label>
+        <input type="tel" id="rsvp-new-phone" placeholder="(00) 00000-0000" autocomplete="tel" inputmode="tel">
+        <div class="error-txt hidden" id="rsvp-new-phone-err">Por favor, digite seu telefone com DDD. Ex.: (43) 99999-0000</div>
       </div>
       <div class="field">
         <label>Recado para os noivos <span style="text-transform:none;font-weight:400">(opcional)</span></label>
@@ -841,7 +843,7 @@ function normGuest(g){
     id:g.id, familia:g.familia || g.name || 'Convidados', membros,
     group:g.group||'', phone:g.phone||'', message:g.message||'', notes:g.notes||'',
     respondedAt:g.respondedAt||0, createdAt:g.createdAt||0, source:g.source||'',
-    hidden:!!g.hidden, foraDaLista:!!g.foraDaLista, status:g.status
+    hidden:!!g.hidden, foraDaLista:!!g.foraDaLista, duplicadaDe:g.duplicadaDe||'', status:g.status
   };
 }
 
@@ -861,6 +863,14 @@ function familyScore(f, qTokens){
     return total + (words.some(w => w.startsWith(q) || q.startsWith(w)) ? 1 : 0);
   }, 0);
 }
+
+// A busca do convidado só enxerga CONVITES da lista (familias.js ou criados no painel) ainda não respondidos.
+// Confirmações feitas pelo site nunca aparecem para outra pessoa — nem os dados, nem para editar.
+function conviteAberto(f){ return (f.seed || f.source === 'organizador') && !f.respondedAt; }
+
+// Telefone obrigatório: DDD + número (10 ou 11 dígitos; aceita +55)
+const phoneDigits = (s) => String(s||'').replace(/\D/g,'');
+const phoneOk = (s) => { const d = phoneDigits(s); return d.length >= 10 && d.length <= 13; };
 
 // Status da família a partir dos membros
 function familyStatus(f){
@@ -1077,13 +1087,14 @@ const RSVP = {
     }
     $('rsvp-name-err').classList.add('hidden');
     this.data.query = name;
-    const invited = mergedInvited(await Store.list('guests'));
+    // só convites da lista ainda não respondidos (nunca confirmações de outras pessoas)
+    const invited = mergedInvited(await Store.list('guests')).filter(conviteAberto);
     // famílias em que o nome digitado bate com um membro (ou com o nome da família), melhores primeiro
     const scored = invited.map(f => ({ f, s: familyScore(f, qTokens) })).filter(x => x.s > 0).sort((a,b) => b.s - a.s);
     const matches = scored.map(x => x.f);
     if (!matches.length){
-      // confirmação aberta: quem não está na lista confirma pelo formulário
-      this.openNew('Não encontramos seu nome na nossa lista, mas tudo bem: confirme por aqui! 💛');
+      // confirmação aberta: todo mundo pode confirmar pelo formulário
+      this.openNew();
       return;
     }
     // uma família ganha sozinha -> entra direto; empate -> tela de escolha
@@ -1098,16 +1109,14 @@ const RSVP = {
   pick(i){ this.openFamily(this.matches[i]); },
   openFamily(fam){
     this.data.family = fam;
-    // presume presença (vai=true) para quem ainda não respondeu; mantém "não vai" de quem já marcou
-    this.data.membros = (fam.membros||[]).map(m => ({ nome:m.nome, vai: m.vai===false ? false : true }));
-    const already = fam.status && fam.status!=='pendente';
-    $('rsvp-fam-greet').textContent = already ? 'Sua resposta está registrada ✨' : 'Confirme sua presença';
-    $('rsvp-fam-sub').textContent = already
-      ? 'Você pode revisar e alterar quem vai abaixo, é só reenviar.'
-      : 'Toque em cada nome para marcar quem vai e quem não vai.';
+    // sempre começa do zero: todos marcados como "vai", sem telefone/recado de ninguém
+    this.data.membros = (fam.membros||[]).map(m => ({ nome:m.nome, vai: true }));
+    $('rsvp-fam-greet').textContent = 'Confirme sua presença';
+    $('rsvp-fam-sub').textContent = 'Toque em cada nome para marcar quem vai e quem não vai.';
     $('rsvp-fam-label').textContent = fam.familia;
-    $('rsvp-phone').value = fam.phone || '';
-    $('rsvp-message').value = fam.message || '';
+    $('rsvp-phone').value = '';
+    $('rsvp-message').value = '';
+    $('rsvp-phone-err').classList.add('hidden');
     $('rsvp-submit').disabled = false;
     $('rsvp-submit').textContent = 'Enviar confirmação';
     this.renderMembers();
@@ -1126,17 +1135,26 @@ const RSVP = {
   setMember(i,v){ this.data.membros[i].vai = v; this.renderMembers(); },
   async submit(){
     const fam = this.data.family; if (!fam) return;
+    const phone = $('rsvp-phone').value.trim();
+    if (!phoneOk(phone)){ $('rsvp-phone-err').classList.remove('hidden'); $('rsvp-phone').focus(); return; }
+    $('rsvp-phone-err').classList.add('hidden');
     const btn = $('rsvp-submit'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span>';
     try {
       const membros = this.data.membros.map(m => ({ nome:m.nome, vai: !!m.vai }));
-      const status = familyStatus({membros});
+      const agora = Date.now();
       const payload = {
         familia: fam.familia, membros, group: fam.group||'',
-        phone: $('rsvp-phone').value.trim(), message: $('rsvp-message').value.trim(),
-        status, respondedAt: Date.now(), source:'convidado'
+        phone, message: $('rsvp-message').value.trim(),
+        status: familyStatus({membros}), respondedAt: agora, source:'convidado'
       };
-      if (!fam.respondedAt && !fam.createdAt) payload.createdAt = Date.now();
-      await Store.set('guests', fam.id, payload);
+      // alguém do mesmo convite respondeu enquanto esta tela estava aberta? então vira um registro separado
+      const atual = (await Store.list('guests')).find(g => g.id === fam.id);
+      if (atual?.respondedAt){
+        await Store.set('guests', 'fam-' + uid(), { ...payload, foraDaLista: true, duplicadaDe: fam.id, createdAt: agora });
+      } else {
+        if (!atual?.createdAt) payload.createdAt = agora;
+        await Store.set('guests', fam.id, payload);
+      }
       this.showDone(membros.filter(m=>m.vai).length);
     } catch(e){
       console.error(e); toast('Erro ao enviar. Tente novamente.');
@@ -1158,9 +1176,10 @@ const RSVP = {
   openNew(sub){
     this.data.newAttending = null;
     this.data.comps = [];
-    $('rsvp-new-sub').textContent = sub || 'Preencha seus dados abaixo para confirmar. 💛';
+    $('rsvp-new-sub').textContent = sub || 'Preencha seus dados abaixo para confirmar sua presença. 💛';
     $('rsvp-new-name').value = this.data.query || '';
     $('rsvp-new-err').classList.add('hidden');
+    $('rsvp-new-phone-err').classList.add('hidden');
     $('rsvp-new-phone').value = ''; $('rsvp-new-message').value = '';
     $('rsvp-new-yes').classList.remove('sel-yes'); $('rsvp-new-no').classList.remove('sel-no');
     $('rsvp-new-extra').classList.add('hidden');
@@ -1187,19 +1206,19 @@ const RSVP = {
     const name = $('rsvp-new-name').value.trim().replace(/\s+/g,' ');
     if (name.length < 3 || !name.includes(' ')){ $('rsvp-new-err').classList.remove('hidden'); $('rsvp-new-name').focus(); return; }
     $('rsvp-new-err').classList.add('hidden');
+    const phone = $('rsvp-new-phone').value.trim();
+    if (!phoneOk(phone)){ $('rsvp-new-phone-err').classList.remove('hidden'); $('rsvp-new-phone').focus(); return; }
+    $('rsvp-new-phone-err').classList.add('hidden');
     if (this.data.newAttending === null) return;
     const btn = $('rsvp-new-submit'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span>';
     try {
-      const invited = mergedInvited(await Store.list('guests'));
-      // já existe alguém com esse nome completo? abre a resposta dele em vez de duplicar
-      const same = invited.find(f => (f.membros||[]).some(m => norm(m.nome) === norm(name)));
-      if (same){ toast('Encontramos um convite com esse nome ✨'); this.openFamily(same); return; }
+      // sempre um registro NOVO: pessoas com o mesmo nome confirmam separadamente, sem ver nada uma da outra
       const vai = this.data.newAttending;
       const comps = vai ? this.data.comps.map(c => c.trim()).filter(Boolean) : [];
       const membros = [{nome:name, vai}, ...comps.map(c => ({nome:c, vai:true}))];
       await Store.set('guests', 'fam-' + uid(), {
         familia: name, membros, group:'', foraDaLista: true,
-        phone: $('rsvp-new-phone').value.trim(), message: $('rsvp-new-message').value.trim(),
+        phone, message: $('rsvp-new-message').value.trim(),
         status: familyStatus({membros}), createdAt: Date.now(), respondedAt: Date.now(), source:'convidado'
       });
       this.showDone(membros.filter(m=>m.vai).length);
@@ -1352,7 +1371,7 @@ const Dash = {
           <tbody>${list.map(g=>{
             const vao = (g.membros||[]).filter(m=>m.vai===true).length;
             return `<tr>
-              <td><strong>${esc(g.familia)}</strong>${g.source==='convidado'?' <span title="Confirmou pelo site" style="font-size:.75rem">🌐</span>':''}${g.foraDaLista?' <span class="badge parcial" title="Confirmou pelo site sem estar na lista de convidados">fora da lista</span>':''}</td>
+              <td><strong>${esc(g.familia)}</strong>${g.source==='convidado'?' <span title="Confirmou pelo site" style="font-size:.75rem">🌐</span>':''}${g.duplicadaDe?' <span class="badge pendente" title="Este convite da lista já tinha sido respondido por outra pessoa; esta é uma resposta separada">2ª resposta do convite</span>':(g.foraDaLista?' <span class="badge parcial" title="Confirmou pelo site sem estar na lista de convidados">fora da lista</span>':'')}</td>
               <td>${(g.membros||[]).map(m=>`<span class="mb ${m.vai===true?'y':m.vai===false?'n':''}">${esc(m.nome)}</span>`).join('')||'—'}</td>
               <td style="white-space:nowrap"><strong>${vao}</strong> / ${(g.membros||[]).length}</td>
               <td>${esc(g.phone)||'—'}</td>
